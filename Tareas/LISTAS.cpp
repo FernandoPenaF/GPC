@@ -2,6 +2,7 @@
 #include <cstdlib>
 using std::cout;
 using std::cin;
+using std::endl;
 using std::malloc;
 using std::free;
 
@@ -11,35 +12,51 @@ typedef struct list_int {
 } LISTA;
 
 LISTA *init_list, *aux, *e;
-int Elems = 1;
+int Elems = 0;
+
+void agregaFinal(int data){
+	e = (LISTA*) malloc(sizeof(LISTA));
+	e -> n = data;
+	e -> ptr = NULL;
+
+	if(init_list == NULL){
+		init_list = e;
+	} else {
+		aux = init_list;
+
+		while(aux -> ptr != NULL){
+			aux = aux -> ptr;
+		}
+		aux -> ptr = e;
+	}
+	Elems++;
+}
+
+void print(){
+	aux = init_list;
+
+	while(aux != NULL){
+		cout << aux -> n << endl;
+		aux = aux -> ptr;
+	}
+}
 
 
 int main() {
-
+	int num;
 
 	cout << "Dar 5 elementos ordenados a la lista\n";
-	e = (LISTA*) malloc(sizeof(LISTA));
-	cout << "Elemento " << Elems << "  ";
-	cin >> e->n;
-	e->ptr = NULL;
-	aux = e;
-	init_list = e;
-	Elems++;
-	while (Elems <= 5) {
-		e = (LISTA*) malloc(sizeof(LISTA));
-		cout << "Elemento " << Elems << "  ";
-		cin >> e->n;
-		aux->ptr = e;
-		e->ptr = NULL;
-		aux = e;
-		Elems++;
+	cout << "Elemento " << (Elems + 1) << "  ";
+	cin >> num;
+	agregaFinal(num);
+
+	while (Elems < 5) {
+		cout << "Elemento " << (Elems + 1) << "  ";
+		cin >> num;
+		agregaFinal(num);
 	}
 	cout << "Los valores son: \n";
-	aux = init_list;
-	while (aux != NULL) {
-		cout << aux->n << "\n";
-		aux = aux->ptr;
-	}
+	print();
 	cin.get();
 	cin.get();
 	return 0;
