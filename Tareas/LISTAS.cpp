@@ -12,7 +12,7 @@ typedef struct node {
 } LISTA;
 
 LISTA *init_list, *aux, *aux2, *e;
-int Elems = 0;
+int numElems = 0;
 
 bool estaVacia(){
 	return init_list == NULL;
@@ -34,19 +34,19 @@ void agregaOrdenado(int data){
 		e -> ptr = aux -> ptr;
 		aux -> ptr = e;
 	}
-	Elems++;
+	numElems++;
 }
 
 void elimina(int data){
 	if(estaVacia()) {
-		cout << "Lista vacía" << endl;
+		cout << "Lista vacía." << endl;
 	} else {
 		aux = init_list;
 
 		if(aux -> n == data){
 			init_list = init_list -> ptr;
 			free(aux);
-			Elems--;
+			numElems--;
 		} else {
 			while(aux != NULL && aux -> n != data){
 				aux2 = aux;
@@ -55,7 +55,7 @@ void elimina(int data){
 			if(aux != NULL){
 				aux2 -> ptr = aux -> ptr;
 				free(aux);
-				Elems--;
+				numElems--;
 			} else {
 				cout << "El elemento no está en la lista." << endl;
 			}
@@ -78,7 +78,7 @@ void agregaFinal(int data){
 		}
 		aux -> ptr = e;
 	}
-	Elems++;
+	numElems++;
 }
 
 void print(struct node *inicio){
@@ -100,14 +100,14 @@ int main() {
 		agregaOrdenado(num);
 	}
 
-	cout << Elems << " elementos en la lista. Los valores son:" << endl;
+	cout << numElems << " elementos en la lista. Los valores son:" << endl;
 	print(init_list);
 
 	for (int i = 0; i < 5; i++){
 		cout << "Elimina " << i + 1 << "  ";
 		cin >> num;
 		elimina(num);
-		cout << Elems << " elementos en la lista. Los valores son:" << endl;
+		cout << numElems << " elementos en la lista. Los valores son:" << endl;
 		print(init_list);
 	}
 
