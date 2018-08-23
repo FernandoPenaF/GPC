@@ -11,7 +11,7 @@ typedef struct node {
 	struct node *ptr;
 } LISTA;
 
-LISTA *init_list, *aux, *aux2, *e;
+LISTA *init_list, *aux, *aux2, *aux3, *e;
 int numElems = 0;
 
 struct node *creaNodo(int data){
@@ -26,17 +26,17 @@ bool estaVacia(){
 	return init_list == NULL;
 }
 
-void agregaOrdenado(struct node *nuevo){
-	if(estaVacia() || init_list -> n >= nuevo -> n){
-		nuevo -> ptr = init_list;
-		init_list = nuevo;
+void agregaOrdenado(struct node **nuevo){
+	if(estaVacia() || init_list -> n >= (*nuevo) -> n){
+		(*nuevo) -> ptr = init_list;
+		init_list = (*nuevo);
 	} else {
 		aux = init_list;
-		while(aux -> ptr != NULL && (aux -> ptr) -> n < nuevo -> n){
+		while(aux -> ptr != NULL && (aux -> ptr) -> n < (*nuevo) -> n){
 			aux = aux -> ptr;
 		}
-		nuevo -> ptr = aux -> ptr;
-		aux -> ptr = nuevo;
+		(*nuevo) -> ptr = aux -> ptr;
+		aux -> ptr = (*nuevo);
 	}
 	numElems++;
 }
@@ -102,7 +102,7 @@ int main() {
 		cout << "Agrega " << i + 1 << "  ";
 		cin >> num;
 		e = creaNodo(num);
-		agregaOrdenado(e);
+		agregaOrdenado(&e);
 	}
 
 	cout << numElems << " elementos en la lista. Los valores son:" << endl;
