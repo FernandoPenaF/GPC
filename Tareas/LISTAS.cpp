@@ -11,7 +11,7 @@ typedef struct node {
 	struct node *ptr;
 } LISTA;
 
-LISTA *init_list, *aux, *aux2, *aux3, *e;
+LISTA *init_list, *aux, *aux2, *e;
 int numElems = 0;
 
 struct node *creaNodo(int data){
@@ -26,17 +26,17 @@ bool estaVacia(){
 	return init_list == NULL;
 }
 
-void agregaOrdenado(struct node **nuevo){
-	if(estaVacia() || init_list -> n >= (*nuevo) -> n){
-		(*nuevo) -> ptr = init_list;
-		init_list = (*nuevo);
+void agregaOrdenado(struct node *nuevo){
+	if(estaVacia() || init_list -> n >= nuevo -> n){
+		nuevo -> ptr = init_list;
+		init_list = nuevo;
 	} else {
 		aux = init_list;
-		while(aux -> ptr != NULL && (aux -> ptr) -> n < (*nuevo) -> n){
+		while(aux -> ptr != NULL && (aux -> ptr) -> n < nuevo -> n){
 			aux = aux -> ptr;
 		}
-		(*nuevo) -> ptr = aux -> ptr;
-		aux -> ptr = (*nuevo);
+		nuevo -> ptr = aux -> ptr;
+		aux -> ptr = nuevo;
 	}
 	numElems++;
 }
@@ -61,63 +61,72 @@ void elimina(int data){
 				free(aux);
 				numElems--;
 			} else {
-				cout << "El elemento no está en la lista." << endl;
+				cout << data << " no está en la lista." << endl;
 			}
 		}
 	}
 }
 
-void agregaFinal(int data){
-	e = (LISTA*) malloc(sizeof(LISTA));
-	e -> n = data;
-	e -> ptr = NULL;
-
+void agregaFinal(struct node *nuevo){
 	if(estaVacia()){
-		init_list = e;
+		init_list = nuevo;
 	} else {
 		aux = init_list;
 
 		while(aux -> ptr != NULL){
 			aux = aux -> ptr;
 		}
-		aux -> ptr = e;
+		aux -> ptr = nuevo;
 	}
 	numElems++;
 }
 
-void print(struct node **inicio){
-	aux = *inicio;
+void print(struct node *inicio){
+	if(estaVacia()){
+		cout << "Lista vacía." << endl;
+	} else {
+		cout << numElems << " elementos en la lista. Los valores son:" << endl;
 
-	while(aux != NULL){
-		cout << aux -> n << endl;
-		aux = aux -> ptr;
+		aux = inicio;
+		while(aux != NULL){
+			cout << aux -> n << endl;
+			aux = aux -> ptr;
+		}
 	}
 }
 
 
 int main() {
 	int num;
-	elimina(10);
+	cout << "============Inicio del programa.=============" << endl;
+	print(init_list);
+
+	cout << "=========Se agregan 5 elementos ordenados a la lista.==========" << endl;
+	for (int i = 0; i < 5; ++i){
+		e = creaNodo(i * 5);
+		agregaFinal(e);
+	}
+	print(init_list);
+
+	cout << "==========El usuario puede añadir números.==========\n" << endl;
 	for (int i = 0; i < 5; i++){
 		cout << "Agrega " << i + 1 << "  ";
 		cin >> num;
 		e = creaNodo(num);
-		agregaOrdenado(&e);
+		agregaOrdenado(e);
 	}
 
-	cout << numElems << " elementos en la lista. Los valores son:" << endl;
-	print(&init_list);
+	print(init_list);
 
+	cout << "===========El usuario puede eliminar números.==========\n" << endl;
 	for (int i = 0; i < 5; i++){
 		cout << "Elimina " << i + 1 << "  ";
 		cin >> num;
 		elimina(num);
-		cout << numElems << " elementos en la lista. Los valores son:" << endl;
-		print(&init_list);
 	}
+
+	print(init_list);
 
 	cin.get();
 	return 0;
 }
-
-
