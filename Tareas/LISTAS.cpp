@@ -14,25 +14,29 @@ typedef struct node {
 LISTA *init_list, *aux, *aux2, *e;
 int numElems = 0;
 
+struct node *creaNodo(int data){
+	struct node *nuevo = (LISTA*) malloc(sizeof(LISTA));
+
+	nuevo -> n = data;
+	nuevo -> ptr = NULL;
+	return nuevo;
+}
+
 bool estaVacia(){
 	return init_list == NULL;
 }
 
-void agregaOrdenado(int data){
-	e = (LISTA*) malloc(sizeof(LISTA));
-	e -> n = data;
-	e -> ptr = NULL;
-
-	if(estaVacia() || init_list -> n >= data){
-		e -> ptr = init_list;
-		init_list = e;
+void agregaOrdenado(struct node *nuevo){
+	if(estaVacia() || init_list -> n >= nuevo -> n){
+		nuevo -> ptr = init_list;
+		init_list = nuevo;
 	} else {
 		aux = init_list;
-		while(aux -> ptr != NULL && (aux -> ptr) -> n < data){
+		while(aux -> ptr != NULL && (aux -> ptr) -> n < nuevo -> n){
 			aux = aux -> ptr;
 		}
-		e -> ptr = aux -> ptr;
-		aux -> ptr = e;
+		nuevo -> ptr = aux -> ptr;
+		aux -> ptr = nuevo;
 	}
 	numElems++;
 }
@@ -81,8 +85,8 @@ void agregaFinal(int data){
 	numElems++;
 }
 
-void print(struct node *inicio){
-	aux = inicio;
+void print(struct node **inicio){
+	aux = *inicio;
 
 	while(aux != NULL){
 		cout << aux -> n << endl;
@@ -97,18 +101,19 @@ int main() {
 	for (int i = 0; i < 5; i++){
 		cout << "Agrega " << i + 1 << "  ";
 		cin >> num;
-		agregaOrdenado(num);
+		e = creaNodo(num);
+		agregaOrdenado(e);
 	}
 
 	cout << numElems << " elementos en la lista. Los valores son:" << endl;
-	print(init_list);
+	print(&init_list);
 
 	for (int i = 0; i < 5; i++){
 		cout << "Elimina " << i + 1 << "  ";
 		cin >> num;
 		elimina(num);
 		cout << numElems << " elementos en la lista. Los valores son:" << endl;
-		print(init_list);
+		print(&init_list);
 	}
 
 	cin.get();
