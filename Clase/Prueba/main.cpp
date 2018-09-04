@@ -7,18 +7,17 @@ void init(void) {
 }
 
 void cuadrado(void) {
+	int offset = 4;
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(5,0,0);
+	glColor3f(0,0,0);
 	glBegin(GL_QUADS);
-		glVertex3f(10, 10, -1);
-		glVertex3f(10, 20, -1);
-		glVertex3f(20, 20, -1);
-		glVertex3f(20, 10, -1);
-
-		glVertex3f(25, 10, -1);
-		glVertex3f(25, 20, -1);
-		glVertex3f(35, 20, -1);
-		glVertex3f(35, 10, -1);
+		for (int i = 10; i < 140; i = i + 5) {
+			glVertex3f(10, i, -1);
+			glVertex3f(10, i + offset, -1);
+			glVertex3f(15, i + offset, -1);
+			glVertex3f(15, i, -1);
+		}
+		
 	glEnd();
 	glFlush();
 }
@@ -41,7 +40,7 @@ void main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowPosition(200,0);
-	glutInitWindowSize(450,400);
+	glutInitWindowSize(750,600);
 	glutCreateWindow("Ejemplo");
 	init();
 	glutDisplayFunc(cuadrado);
