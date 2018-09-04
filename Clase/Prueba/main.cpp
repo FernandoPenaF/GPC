@@ -13,9 +13,11 @@ void cuadrado(void) {
 	int yInit = 5;
 	int xLimit = 145;
 	int yLimit = 190;
+	int cont = 0;
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(0.3,0.3,0.3);
 	glBegin(GL_QUADS);
+	while (cont < 2) {
 		for (int i = xInit; i < xLimit; i = i + 5) {
 			glVertex3f(xInit, i, -1);
 			glVertex3f(xInit, i + yOffset, -1);
@@ -43,7 +45,12 @@ void cuadrado(void) {
 			glVertex3f(i, xLimit + yOffset, -1);
 			glVertex3f(i, xLimit, -1);
 		}
-
+		xInit -= 5;
+		yInit -= 5;
+		xLimit -= 5;
+		yLimit -= 5;
+		cont++;
+	}
 		
 	glEnd();
 	glFlush();
