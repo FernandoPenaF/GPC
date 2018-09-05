@@ -24,7 +24,6 @@ void cuadrado(void) {
 			glVertex3f(xInit + xOffset, i + yOffset, -1);
 			glVertex3f(xInit + xOffset, i, -1);
 		}
-
 		for (int i = yInit; i < yLimit; i = i + 5) {
 			glVertex3f(i + xOffset, yInit, -1);
 			glVertex3f(i + xOffset, yInit + yOffset, -1);
@@ -45,8 +44,8 @@ void cuadrado(void) {
 			glVertex3f(i, xLimit + yOffset, -1);
 			glVertex3f(i, xLimit, -1);
 		}
-		xInit -= 5;
-		yInit -= 5;
+		xInit += 5;
+		yInit += 5;
 		xLimit -= 5;
 		yLimit -= 5;
 		cont++;
