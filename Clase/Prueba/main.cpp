@@ -71,9 +71,7 @@ void cuadrado(void) {
 			glVertex3f(xLimit - xInit - 4 * increment, yLimit - yInit - 7 * increment, -1);
 			glVertex3f(xLimit + 11 * increment - i * increment, (yLimit - yInit - 5 * increment) / 2, -1);
 		}
-
 	glEnd();
-
 	glFlush();
 }
 
