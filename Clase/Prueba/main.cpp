@@ -9,6 +9,7 @@ void init(void) {
 void cuadrado(void) {
 	double xOffset = 4.2;
 	double yOffset = 4.4;
+	int increment = 5;
 	int xInit = 0;
 	int yInit = 0;
 	int xLimit = 145;
@@ -18,27 +19,27 @@ void cuadrado(void) {
 	glColor3f(1.0,0.647,0.0);
 	glBegin(GL_QUADS);
 	while (cont < 2) {
-		for (int i = xInit; i < xLimit; i = i + 5) {
+		for (int i = xInit; i < xLimit; i = i + increment) {
 			glVertex3f(xInit, i, -1);
 			glVertex3f(xInit, i + yOffset, -1);
 			glVertex3f(xInit + xOffset, i + yOffset, -1);
 			glVertex3f(xInit + xOffset, i, -1);
 		}
-		for (int i = yInit; i < yLimit; i = i + 5) {
+		for (int i = yInit; i < yLimit; i = i + increment) {
 			glVertex3f(i + xOffset, yInit, -1);
 			glVertex3f(i + xOffset, yInit + yOffset, -1);
 			glVertex3f(i, yInit + yOffset, -1);
 			glVertex3f(i, yInit, -1);
 		}
 
-		for (int i = xInit; i < xLimit + 5; i = i + 5) {
+		for (int i = xInit; i < xLimit + increment; i = i + increment) {
 			glVertex3f(yLimit, i, -1);
 			glVertex3f(yLimit, i + yOffset, -1);
 			glVertex3f(yLimit + xOffset, i + yOffset, -1);
 			glVertex3f(yLimit + xOffset, i, -1);
 		}
 
-		for (int i = yInit; i < yLimit; i = i + 5) {
+		for (int i = yInit; i < yLimit; i = i + increment) {
 			glVertex3f(i + xOffset, xLimit, -1);
 			glVertex3f(i + xOffset, xLimit + yOffset, -1);
 			glVertex3f(i, xLimit + yOffset, -1);
@@ -50,13 +51,20 @@ void cuadrado(void) {
 		yLimit -= 5;
 		cont++;
 	}
-
-	glVertex3f(15, 40, -1);
-	glVertex3f(70, 175, -1);
-	glVertex3f(135, 40, -1);
-	glVertex3f(70, 15,-1);
-		
 	glEnd();
+	
+	glBegin(GL_TRIANGLES);
+		glColor3f(1.0,0.647,0.0);
+
+		glVertex3f(xInit, (yLimit - yInit - 5 * increment) / 2, -1);
+		glVertex3f(xLimit - xInit - 6 * increment, yLimit - yInit - 7 * increment, -1);
+		glVertex3f(xLimit - xInit - 6 * increment, yInit, -1);
+
+		glVertex3f(xLimit - xInit - 4 * increment, yInit, -1);
+		glVertex3f(xLimit - xInit - 4 * increment, yLimit - yInit - 7 * increment, -1);
+		glVertex3f(xLimit + 11 * increment, (yLimit - yInit - 5 * increment) / 2, -1);
+	glEnd();
+
 	glFlush();
 }
 
