@@ -74,7 +74,6 @@ void cuadrado(void) {
 				glVertex3f(xLimit - xInit - 6 * increment, yLimit - yInit - 7 * increment, -1);
 				glVertex3f(xLimit - xInit - 6 * increment, yInit, -1);
 			}
-
 			for (int i = 0; i < 20; i++) {
 				glColor3f(colorCode + i * colorIncrement, colorCode + i * colorIncrement, colorCode + i * colorIncrement);
 				glVertex3f(xLimit - xInit - 4 * increment, yInit, -1);
@@ -88,15 +87,24 @@ void cuadrado(void) {
 	xLimit = tempXLimit;
 	yLimit = tempYLimit;
 
-	glColor3f(0, 1.0, 0);
+	double incrementY = 1.5;
+	double incrementY1 = 4.5;
+	double incrementX = 2.5;
+	double incrementX1 = 3.5;
 	glBegin(GL_TRIANGLES);
-		glVertex3f(xInit, (yLimit - yInit - 4.8 * increment) / 2, -1);
-		glVertex3f(xLimit - xInit - 6.2 * increment, yLimit - yInit - 7 * increment - yOffset / 8, -1);
-		glVertex3f(xInit, yLimit - yInit - 7 * increment - yOffset / 8, -1);
+		for (int i = 0; i < 18; i++) {
+			glColor3f(colorCode + i * colorIncrement, colorCode + i * colorIncrement, colorCode + i * colorIncrement);
+			glVertex3f(xInit + i * incrementX, (yLimit - yInit - 4.8 * increment + i * incrementY1) / 2, -1);
+			glVertex3f(xLimit - xInit - 6.2 * increment - i * incrementX, yLimit - yInit - 7 * increment - yOffset / 8 - i * incrementY, -1);
+			glVertex3f(xInit + i * incrementX, yLimit - yInit - 7 * increment - yOffset / 8 - i * incrementY, -1);
+		}
 
-		glVertex3f(xLimit - xInit - 3.8 * increment, yInit, -1);
-		glVertex3f(xLimit + 10.9 * increment, (yLimit - yInit - 5.4 * increment) / 2, -1);
-		glVertex3f(xLimit + 10.9 * increment, yInit, -1);
+		for (int i = 0; i < 15; i++) {
+			glColor3f(colorCode + (i + .87) * colorIncrement, colorCode + (i + .87) * colorIncrement, colorCode + (i + .87) * colorIncrement);
+			glVertex3f(xLimit - xInit - 3.8 * increment + i * incrementX1, yInit + (i * incrementY1)/2, -1);
+			glVertex3f(xLimit + 10.9 * increment - i * incrementX, (yLimit - yInit - 5.4 * increment - i * incrementY1) / 2, -1);
+			glVertex3f(xLimit + 10.9 * increment - i * incrementX, yInit + (i * incrementY1) / 2, -1);
+		}
 	glEnd();
 
 	glFlush();
