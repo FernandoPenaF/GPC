@@ -6,21 +6,17 @@ void init(void) {
 	gluOrtho2D(0.0,200.0,0.0,150.0);
 }
 
-void cuadrado(void) {
+void pinta(void) {
 	double colorIncrement, colorCode;
-	double xOffset = 4.2;
-	double yOffset = 4.4;
+	double incrementX, incrementX1, incrementY, incrementY1;
+	double xOffset = 4.2, yOffset = 4.4;
+	int xInit = 0, yInit = 0;
+	int xLimit = 145, yLimit = 195;
 	int increment = 5;
-	int xInit = 0;
-	int yInit = 0;
-	int xLimit = 145;
-	int yLimit = 195;
-	int tempXInit, tempYInit, tempXLimit, tempYLimit;
 	int cont = 0;
 
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(0.25, 0.25, 0.25);
-
+	glColor3f(0.45, 0.45, 0.85);
 	glBegin(GL_QUADS);
 		while (cont < 2) {
 			for (int i = xInit; i < xLimit; i = i + increment) {
@@ -50,63 +46,52 @@ void cuadrado(void) {
 				glVertex3f(i, xLimit + yOffset, -1);
 				glVertex3f(i, xLimit, -1);
 			}
-
-			glColor3f(0.35, 0.35, 0.35);
 			xInit += 5;
 			yInit += 5;
 			xLimit -= 5;
 			yLimit -= 5;
 			cont++;
+			glColor3f(0.55, 0.55, 0.85);
 		}
 	glEnd();
-	
-	tempXInit = xInit;
-	tempYInit = yInit;
-	tempXLimit = xLimit;
-	tempYLimit = yLimit;
 
+	colorCode = 0.55;
+	colorIncrement = 0.045;
 	glBegin(GL_TRIANGLES);
-		colorIncrement = 0.045;
-		colorCode = 0.35;
 			for (int i = 0; i < 20; i++) {
-				glColor3f(colorCode + i * colorIncrement, colorCode + i * colorIncrement, colorCode + i * colorIncrement);
+				glColor3f(colorCode + i * colorIncrement, colorCode + i * (colorIncrement - 0.030), 0.85);
 				glVertex3f(xInit + i * increment, (yLimit - yInit - 5 * increment) / 2, -1);
 				glVertex3f(xLimit - xInit - 6 * increment, yLimit - yInit - 7 * increment, -1);
 				glVertex3f(xLimit - xInit - 6 * increment, yInit, -1);
 			}
 			for (int i = 0; i < 20; i++) {
-				glColor3f(colorCode + i * colorIncrement, colorCode + i * colorIncrement, colorCode + i * colorIncrement);
+				glColor3f(colorCode + i * colorIncrement, colorCode + i * (colorIncrement - 0.030), 0.85);
 				glVertex3f(xLimit - xInit - 4 * increment, yInit, -1);
 				glVertex3f(xLimit - xInit - 4 * increment, yLimit - yInit - 7 * increment, -1);
 				glVertex3f(xLimit + 11 * increment - i * increment, (yLimit - yInit - 5 * increment) / 2, -1);
 			}
 	glEnd();
 	
-	xInit = tempXInit;
-	yInit = tempYInit;
-	xLimit = tempXLimit;
-	yLimit = tempYLimit;
-
-	double incrementY = 1.5;
-	double incrementY1 = 4.5;
-	double incrementX = 2.5;
-	double incrementX1 = 3.5;
+	colorIncrement = 0.035;
+	incrementY = 1.5;
+	incrementY1 = 4.5;
+	incrementX = 2.5;
+	incrementX1 = 3.5;
 	glBegin(GL_TRIANGLES);
 		for (int i = 0; i < 18; i++) {
-			glColor3f(colorCode + i * colorIncrement, colorCode + i * colorIncrement, colorCode + i * colorIncrement);
+			glColor3f(colorCode + i * colorIncrement, colorCode + i * colorIncrement, 0.85);
 			glVertex3f(xInit + i * incrementX, (yLimit - yInit - 4.8 * increment + i * incrementY1) / 2, -1);
 			glVertex3f(xLimit - xInit - 6.2 * increment - i * incrementX, yLimit - yInit - 7 * increment - yOffset / 8 - i * incrementY, -1);
 			glVertex3f(xInit + i * incrementX, yLimit - yInit - 7 * increment - yOffset / 8 - i * incrementY, -1);
 		}
 
 		for (int i = 0; i < 15; i++) {
-			glColor3f(colorCode + (i + .87) * colorIncrement, colorCode + (i + .87) * colorIncrement, colorCode + (i + .87) * colorIncrement);
+			glColor3f(colorCode + (i + .87) * colorIncrement, colorCode + (i + .87) * colorIncrement, 0.85);
 			glVertex3f(xLimit - xInit - 3.8 * increment + i * incrementX1, yInit + (i * incrementY1)/2, -1);
 			glVertex3f(xLimit + 10.9 * increment - i * incrementX, (yLimit - yInit - 5.4 * increment - i * incrementY1) / 2, -1);
 			glVertex3f(xLimit + 10.9 * increment - i * incrementX, yInit + (i * incrementY1) / 2, -1);
 		}
 	glEnd();
-
 	glFlush();
 }
 
@@ -115,9 +100,9 @@ void main(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowPosition(200,0);
 	glutInitWindowSize(600,600);
-	glutCreateWindow("Ejemplo");
+	glutCreateWindow("Intento de cerámica");
 	init();
-	glutDisplayFunc(cuadrado);
+	glutDisplayFunc(pinta);
 	glutMainLoop();
 }
 	
