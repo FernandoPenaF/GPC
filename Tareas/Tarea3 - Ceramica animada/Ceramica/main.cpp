@@ -1,4 +1,6 @@
 #include "GL/glut.h"
+#include "math.h"
+#define M_PI 3.14159265358979323846
 
 void init(void) {
 	glClearColor(0.980, 0.922, 0.843,0.0);
@@ -10,7 +12,7 @@ bool execute = true;
 float color1 = 1.0f;
 float color2 = 0.7f;
 float color3 = 0.7f;
-float colorIncrement, colorCode, anguloD, anguloI;
+float colorIncrement, colorCode, anguloD, anguloI, anguloCD, anguloCI;
 double incrementX, incrementX1, incrementY, incrementY1;
 double xOffset, yOffset;
 int xInit, yInit, xLimit, yLimit;
@@ -134,6 +136,23 @@ void pintaExtremos(void) {
 	glEnd();
 }
 
+void pintaCirculo(GLfloat x, GLfloat y, GLfloat radius) {
+	int i;
+	int triangleAmount = 1000;
+	GLfloat twicePi = 2.0f * M_PI;
+
+	glEnable(GL_LINE_SMOOTH);
+	glLineWidth(5.0);
+
+	glBegin(GL_LINES);
+	glColor3f(color1, color2, color3);
+	for (i = 0; i <= triangleAmount; i++) {
+		glVertex2f(x, y);
+		glVertex2f(x + (radius * cos(i * twicePi / triangleAmount)), y + (radius * sin(i * twicePi / triangleAmount)));
+	}
+	glEnd();
+}
+
 void pinta(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	
@@ -142,6 +161,24 @@ void pinta(void) {
 	
 	pintaMarcos();
 	pintaExtremos();
+
+	glPushMatrix();
+		anguloCD -= 0.5f;
+		glTranslatef(xcenter, ycenter, 0);
+		glRotatef(anguloCD, 0.0, 0.0, 1.0);
+		glScalef(0.5f, 0.5f, 0);
+		glTranslatef(-xcenter, -ycenter, 0);
+		pintaCirculo(30, 30, 20);
+	glPopMatrix();
+
+	glPushMatrix();
+		anguloCD -= 0.5f;
+		glTranslatef(xcenter, ycenter, 0);
+		glRotatef(anguloCD, 0.0, 0.0, 1.0);
+		glScalef(0.5f, 0.5f, 0);
+		glTranslatef(-xcenter, -ycenter, 0);
+		pintaCirculo(170, 120, 20);
+	glPopMatrix();
 
 	glPushMatrix();
 		anguloD -= 0.5f;
@@ -171,7 +208,7 @@ void main(int argc, char** argv) {
 	glutInitWindowSize(600,600);
 	glutCreateWindow("Intento de cerámica 2.0");
 	init();
-	anguloD = 0.0, anguloI = 0.0;
+	anguloD = 0.0, anguloI = 0.0, anguloCD = 0.0, anguloCI = 0.0;
 	glutDisplayFunc(pinta);
 	glutTimerFunc(0, timer, 0);
 	glutMainLoop();
