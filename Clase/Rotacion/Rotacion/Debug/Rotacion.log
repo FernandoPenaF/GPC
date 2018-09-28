@@ -1,4 +1,3 @@
 ﻿  main.cpp
-c:\users\lpenaf\desktop\gpc\clase\rotacion\rotacion\main.cpp(55): warning C4305: '=': truncamiento de 'double' a 'float'
   Rotacion.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Rotacion\Rotacion\Debug\Rotacion.exe
   Rotacion.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Rotacion\Rotacion\Debug\Rotacion.pdb (Full PDB)

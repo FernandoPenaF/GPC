@@ -2,7 +2,7 @@
 
 void init(void) {
 	glClearColor(1.0, 1.0, 1.0, 0.0);
-	glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_MATRIX_MODE);
 	gluOrtho2D(0.0, 200.0, 0.0, 200.0);
 }
 
@@ -30,15 +30,32 @@ void timer(int value){
 
 
 void dibujar() {
-
+	float xcenter = 140;
+	float ycenter = 125;
+	float zcenter = 0;
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	glPushMatrix();
+	angulo += 1.0f;
+	glTranslatef(xcenter, ycenter, zcenter);
 	glRotatef(angulo, 0.0, 0.0, 1.0);
-	glBegin(GL_TRIANGLES);
-	//glColor3f(1.0, 0.0, 0.0);
-	glColor3f(color1, color2, color3);
-	glVertex3f(100, 100, 0);
-	glVertex3f(160, 160, 0);
-	glVertex3f(160, 100, 0);
+	glTranslatef(-xcenter, -ycenter, -zcenter);
+	
+	glBegin(GL_QUADS);
+	glColor3f(1.0, 0.0, 0.0);
+		glVertex3f(100, 100, 0);
+		glVertex3f(100, 150, 0);
+		glVertex3f(180, 150, 0);
+		glVertex3f(180, 100, 0);
+	glEnd();
+
+	glPopMatrix();
+	
+	glBegin(GL_QUADS);
+		glVertex3f(0, 50, 0);
+		glVertex3f(50, 80, 0);
+		glVertex3f(80, 50, 0);
+		glVertex3f(80, 0, 0);
 	glEnd();
 	glutSwapBuffers();
 }
@@ -52,9 +69,9 @@ void main(int argc, char** argv) {
 	glutInitWindowSize(400, 300);
 	glutCreateWindow("Ejemplo");
 	init();
-	angulo = 0.07;
+	angulo = 0.5;
 	glutDisplayFunc(dibujar);
 	glutIdleFunc(dibujar);
-	glutTimerFunc(0, timer, 0);
+	//glutTimerFunc(0, timer, 0);
 	glutMainLoop();
 }
