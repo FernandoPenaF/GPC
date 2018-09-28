@@ -10,7 +10,7 @@ bool execute = true;
 float color1 = 0.0f;
 float color2 = 0.0f;
 //float color3 = 0.85f;
-float colorIncrement, colorCode, angulo;
+float colorIncrement, colorCode, anguloD, anguloI;
 double incrementX, incrementX1, incrementY, incrementY1;
 double xOffset, yOffset;
 int xInit, yInit, xLimit, yLimit;
@@ -81,7 +81,7 @@ void pintaMarcos(void) {
 	glEnd();
 }
 
-void pintaInternos(void) {
+void pintaInternosD(void) {
 	colorCode = 0.55;
 	colorIncrement = 0.045;
 	glBegin(GL_TRIANGLES);
@@ -92,6 +92,13 @@ void pintaInternos(void) {
 		glVertex3f(xLimit - xInit - 6 * increment, yLimit - yInit - 7 * increment, 0);
 		glVertex3f(xLimit - xInit - 6 * increment, yInit, 0);
 	}
+	glEnd();
+}
+
+void pintaInternosI(void) {
+	colorCode = 0.55;
+	colorIncrement = 0.045;
+	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < 20; i++) {
 		glColor3f(color1 + i * colorIncrement, color2 + i * (colorIncrement - 0.030), 0.85);
 		//glColor3f(colorCode + i * colorIncrement, colorCode + i * (colorIncrement - 0.030), 0.85);
@@ -133,12 +140,23 @@ void pinta(void) {
 	
 	pintaMarcos();
 	pintaExtremos();
+
 	glPushMatrix();
-		angulo += 0.5f;
+		anguloD -= 0.5f;
 		glTranslatef(xcenter, ycenter, 0);
-		glRotatef(angulo, 0.0, 0.0, 1.0);
+		glRotatef(anguloD, 0.0, 0.0, 1.0);
+		glScalef(0.5f, 0.5f, 0);
 		glTranslatef(-xcenter, -ycenter, 0);
-		pintaInternos();
+		pintaInternosD();
+	glPopMatrix();
+
+	glPushMatrix();
+		anguloI += 0.5f;
+		glTranslatef(xcenter, ycenter, 0);
+		glRotatef(anguloI, 0.0, 0.0, 1.0);
+		glScalef(0.5f, 0.5f, 0);
+		glTranslatef(-xcenter, -ycenter, 0);
+		pintaInternosI();
 	glPopMatrix();
 	
 	glFlush();
@@ -151,7 +169,7 @@ void main(int argc, char** argv) {
 	glutInitWindowSize(600,600);
 	glutCreateWindow("Intento de cerámica");
 	init();
-	angulo = 0.0;
+	anguloD = 0.0, anguloI = 0.0;
 	glutDisplayFunc(pinta);
 	glutTimerFunc(0, timer, 0);
 	glutMainLoop();
