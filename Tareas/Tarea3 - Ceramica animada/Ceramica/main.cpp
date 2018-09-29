@@ -12,7 +12,7 @@ bool execute = true;
 float color1 = 1.0f;
 float color2 = 0.7f;
 float color3 = 0.7f;
-float colorIncrement, colorCode, anguloD, anguloI, anguloCD, anguloCI;
+float colorIncrement, colorCode, anguloD, anguloI, anguloC;
 double incrementX, incrementX1, incrementY, incrementY1;
 double xOffset, yOffset;
 int xInit, yInit, xLimit, yLimit;
@@ -154,6 +154,7 @@ void pintaCirculo(GLfloat x, GLfloat y, GLfloat radius) {
 }
 
 int it = 1000;
+bool cRotate = true;
 
 void pinta(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -164,34 +165,46 @@ void pinta(void) {
 	pintaMarcos();
 	pintaExtremos();
 
-	glPushMatrix();
-		anguloCD -= 0.5f;
-		glTranslatef(xcenter, ycenter, 0);
-		glRotatef(anguloCD, 0.0, 0.0, 1.0);
-		glScalef(0.5f, 0.5f, 0);
-		glTranslatef(-xcenter, -ycenter, 0);
-		pintaCirculo(30, 30, 20);
-	glPopMatrix();
+	if (cRotate) {
+		glPushMatrix();
+			anguloC -= 0.5f;
+			glTranslatef(xcenter, ycenter, 0);
+			glRotatef(anguloC, 0.0, 0.0, 1.0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaCirculo(30, 30, 20);
+		glPopMatrix();
 
-	glPushMatrix();
-		anguloCD -= 0.5f;
-		glTranslatef(xcenter, ycenter, 0);
-		glRotatef(anguloCD, 0.0, 0.0, 1.0);
-		glScalef(0.5f, 0.5f, 0);
-		glTranslatef(-xcenter, -ycenter, 0);
-		pintaCirculo(170, 120, 20);
-	glPopMatrix();
+		glPushMatrix();
+			anguloC -= 0.5f;
+			glTranslatef(xcenter, ycenter, 0);
+			glRotatef(anguloC, 0.0, 0.0, 1.0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaCirculo(170, 120, 20);
+		glPopMatrix();
+	}
+	else {
+		glPushMatrix();
+		anguloC -= 0.5f;
+			glTranslatef(xcenter, ycenter, 0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaCirculo(30, 30, 20);
+		glPopMatrix();
 
-	glPushMatrix();
-		anguloCD -= 0.5f;
-		glTranslatef(xcenter, ycenter, 0);
-		glRotatef(anguloCD, 0.0, 0.0, 1.0);
-		glScalef(0.5f, 0.5f, 0);
-		glTranslatef(-xcenter, -ycenter, 0);
-		pintaCirculo(170, 120, 20);
-	glPopMatrix();
+		glPushMatrix();
+			anguloC -= 0.5f;
+			glTranslatef(xcenter, ycenter, 0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaCirculo(170, 120, 20);
+		glPopMatrix();
+	}
 
+	//Se pintan los triángulos interiores
 	if (it <= 0) {
+		cRotate = false;
 		glPushMatrix();
 			anguloD -= 0.5f;
 			glTranslatef(xcenter, ycenter, 0);
@@ -200,6 +213,7 @@ void pinta(void) {
 			glTranslatef(-xcenter, -ycenter, 0);
 			pintaInternosD();
 		glPopMatrix();
+		--it;
 	}
 	else {
 		glPushMatrix();
@@ -240,7 +254,7 @@ void main(int argc, char** argv) {
 	glutInitWindowSize(600,600);
 	glutCreateWindow("Intento de cerámica 2.0");
 	init();
-	anguloD = 0.0, anguloI = 0.0, anguloCD = 0.0, anguloCI = 0.0;
+	anguloD = 0.0, anguloI = 0.0, anguloC = 0.0;
 	glutDisplayFunc(pinta);
 	//glutIdleFunc(pinta);
 	glutTimerFunc(0, timer, 0);
