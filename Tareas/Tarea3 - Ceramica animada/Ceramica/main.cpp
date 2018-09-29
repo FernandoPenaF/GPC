@@ -153,6 +153,8 @@ void pintaCirculo(GLfloat x, GLfloat y, GLfloat radius) {
 	glEnd();
 }
 
+int it = 1000;
+
 void pinta(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	
@@ -181,23 +183,53 @@ void pinta(void) {
 	glPopMatrix();
 
 	glPushMatrix();
-		anguloD -= 0.5f;
+		anguloCD -= 0.5f;
 		glTranslatef(xcenter, ycenter, 0);
-		glRotatef(anguloD, 0.0, 0.0, 1.0);
+		glRotatef(anguloCD, 0.0, 0.0, 1.0);
 		glScalef(0.5f, 0.5f, 0);
 		glTranslatef(-xcenter, -ycenter, 0);
-		pintaInternosD();
+		pintaCirculo(170, 120, 20);
 	glPopMatrix();
 
-	glPushMatrix();
-		anguloI += 0.5f;
-		glTranslatef(xcenter, ycenter, 0);
-		glRotatef(anguloI, 0.0, 0.0, 1.0);
-		glScalef(0.5f, 0.5f, 0);
-		glTranslatef(-xcenter, -ycenter, 0);
-		pintaInternosI();
-	glPopMatrix();
-	
+	if (it <= 0) {
+		glPushMatrix();
+			anguloD -= 0.5f;
+			glTranslatef(xcenter, ycenter, 0);
+			glRotatef(anguloD, 0.0, 0.0, 1.0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaInternosD();
+		glPopMatrix();
+	}
+	else {
+		glPushMatrix();
+			glTranslatef(xcenter, ycenter, 0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaInternosD();
+		glPopMatrix();
+		--it;
+	}
+
+	if (it <= 0) {
+		glPushMatrix();
+			anguloI += 0.5f;
+			glTranslatef(xcenter, ycenter, 0);
+			glRotatef(anguloI, 0.0, 0.0, 1.0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaInternosI();
+		glPopMatrix();
+	}
+	else {
+		glPushMatrix();
+			glTranslatef(xcenter, ycenter, 0);
+			glScalef(0.5f, 0.5f, 0);
+			glTranslatef(-xcenter, -ycenter, 0);
+			pintaInternosI();
+		glPopMatrix();
+	}
+
 	glFlush();
 }
 
@@ -210,6 +242,7 @@ void main(int argc, char** argv) {
 	init();
 	anguloD = 0.0, anguloI = 0.0, anguloCD = 0.0, anguloCI = 0.0;
 	glutDisplayFunc(pinta);
+	//glutIdleFunc(pinta);
 	glutTimerFunc(0, timer, 0);
 	glutMainLoop();
 }
