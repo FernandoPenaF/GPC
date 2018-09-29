@@ -136,20 +136,18 @@ void pintaExtremos(void) {
 	glEnd();
 }
 
-void pintaCirculo(GLfloat x, GLfloat y, GLfloat radius) {
-	int i;
-	int triangleAmount = 1000;
-	GLfloat twicePi = 2.0f * M_PI;
+void pintaCirculo(GLfloat x, GLfloat y, GLfloat radio) {
+	int triangle = 1000;
+	GLfloat doublePi = 2.0f * M_PI;
 
 	glEnable(GL_LINE_SMOOTH);
 	glLineWidth(5.0);
-
 	glBegin(GL_LINES);
-	glColor3f(color1, color2, color3);
-	for (i = 0; i <= triangleAmount; i++) {
-		glVertex2f(x, y);
-		glVertex2f(x + (radius * cos(i * twicePi / triangleAmount)), y + (radius * sin(i * twicePi / triangleAmount)));
-	}
+		glColor3f(color1, color2, color3);
+		for (int i = 0; i <= triangle; i++) {
+			glVertex3f(x, y, 0);
+			glVertex3f(x + (radio * cos(i * doublePi / triangle)), y + (radio * sin(i * doublePi / triangle)), 0);
+		}
 	glEnd();
 }
 
@@ -165,6 +163,7 @@ void pinta(void) {
 	pintaMarcos();
 	pintaExtremos();
 
+	//Se pintan los circulos interiores
 	if (cRotate) {
 		glPushMatrix();
 			anguloC -= 0.5f;
@@ -202,9 +201,17 @@ void pinta(void) {
 		glPopMatrix();
 	}
 
-	//Se pintan los triángulos interiores
-	if (it <= 0) {
-		cRotate = false;
+	/*
+		Se pintan los triángulos interiores
+		Aquí se controla el decremento del iterador
+		y el cambio del bool cRotate
+	*/
+	if (it <= -80) {
+		if (it <= -1000)
+			cRotate = true;
+		else
+			cRotate = false;
+		
 		glPushMatrix();
 			anguloD -= 0.5f;
 			glTranslatef(xcenter, ycenter, 0);
@@ -214,6 +221,11 @@ void pinta(void) {
 			pintaInternosD();
 		glPopMatrix();
 		--it;
+
+		if (it == -2230) {
+			it = 1000;
+			cRotate = true;
+		}
 	}
 	else {
 		glPushMatrix();
@@ -225,7 +237,7 @@ void pinta(void) {
 		--it;
 	}
 
-	if (it <= 0) {
+	if (it <= -80) {
 		glPushMatrix();
 			anguloI += 0.5f;
 			glTranslatef(xcenter, ycenter, 0);
