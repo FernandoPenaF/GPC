@@ -1,5 +1,0 @@
-﻿  main.cpp
-c:\users\lpenaf\desktop\gpc\clase\rotacion\rotacion\main.cpp(17): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\lpenaf\desktop\gpc\clase\rotacion\rotacion\main.cpp(26): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-  Rotacion.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Rotacion\Rotacion\Debug\Rotacion.exe
-  Rotacion.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Rotacion\Rotacion\Debug\Rotacion.pdb (Full PDB)
