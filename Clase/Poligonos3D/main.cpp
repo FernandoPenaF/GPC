@@ -1,5 +1,8 @@
 #include <GL/glut.h>
+#include <iostream>
+
 float angle = 0.0;
+int windowID;
 
 void drawCube(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -10,10 +13,11 @@ void drawCube(){
 
 	glTranslatef(0.0, 0.0, -5.0);
 	glRotatef(angle, 1.0, 0.0, 0.0);
-	glRotatef(angle, 0.0, 1.0, 0.0);
-	glRotatef(angle, 0.0, 0.0, 1.0);
+	//glRotatef(angle, 1.0, 1.0, 0.0);
+	//glRotatef(angle, 0.0, 0.0, 1.0);
 
 	glutWireSphere(0.75, 8, 6);
+	//glutWireCone(0.7, 2.0, 7, 6);
 
 	glFlush();
 	glutSwapBuffers();
@@ -33,28 +37,35 @@ void update(int value) {
 }
 
 // Called when the window is resized
-void handleResize(int w, int h)
-{
+void handleResize(int w, int h){
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45.0, (double)w / (double)h, 1.0, 200.0);
 }
 
+void keyboardCB(unsigned char key, int x, int y){
+	switch (key){
+	case 27: // Escape key
+		glutDestroyWindow(windowID);
+		exit(0);
+		break;
+	}
+	glutPostRedisplay();
+}
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(700, 700);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("OpenGL - Rotating a Sphere");
+	windowID = glutCreateWindow("OpenGL - Rotating a Sphere");
 
 	glutDisplayFunc(drawCube);
 	glutReshapeFunc(handleResize);
 
 	glutTimerFunc(25, update, 0);
-
+	glutKeyboardFunc(keyboardCB);
 	glutMainLoop();
 	return 0;
 }
