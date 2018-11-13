@@ -2,6 +2,8 @@
 #include <iostream>
 
 float angle = 0.0;
+float sX = 1.0, sY = 1.0, sZ = 1.0;
+bool rotate = false;
 int windowID;
 
 void drawCube(){
@@ -12,9 +14,13 @@ void drawCube(){
 	glLoadIdentity();
 
 	glTranslatef(0.0, 0.0, -5.0);
-	glRotatef(angle, 1.0, 0.0, 0.0);
+	if(rotate)
+		glRotatef(angle, 1.0, 0.0, 0.0);
 	//glRotatef(angle, 1.0, 1.0, 0.0);
 	//glRotatef(angle, 0.0, 0.0, 1.0);
+
+	glScalef(sX, sY, sZ);
+	//glutWireCube(1.0);
 
 	glutWireSphere(0.75, 8, 6);
 	//glutWireCone(0.7, 2.0, 7, 6);
@@ -46,6 +52,22 @@ void handleResize(int w, int h){
 
 void keyboardCB(unsigned char key, int x, int y){
 	switch (key){
+	case 'E':
+		sX = 2.0;
+		sY = 2.0;
+		sZ = 1.0;
+		break;
+	case 'e':
+		sX = 1.0;
+		sY = 1.0;
+		sZ = 1.0;
+		break;
+	case 'M':
+		rotate = true;
+		break;
+	case 'm':
+		rotate = false;
+		break;
 	case 27: // Escape key
 		glutDestroyWindow(windowID);
 		exit(0);
