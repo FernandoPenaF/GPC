@@ -1,9 +1,10 @@
 #include <GL/glut.h>
+#include <iostream>
 #include <cstdlib>
 #include <ctime>
 
 float angle = 0.0;
-float colorR = 0.3, colorG = 0.3, colorB = 0.3;
+float colorR = 0.3, colorG = 0.3, colorB = 0.3, transparency = 1.0;
 float sX = 1.0, sY = 1.0, sZ = 1.0;
 bool rotate = false, seed = false;
 int windowID;
@@ -26,7 +27,7 @@ void drawCube(){
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 
 	glTranslatef(0.0, 0.0, -5.0);
-	glColor3f(colorR, colorG, colorB);
+	glColor4f(colorR, colorG, colorB, transparency);
 	glScalef(sX, sY, sZ);
 	if (rotate) {
 		glRotatef(angle, 1.0, 0.0, 0.0);
@@ -34,7 +35,7 @@ void drawCube(){
 	}
 	
 	glutSolidCube(1);
-
+	//glutSolidSphere(0.75, 8, 6);
 	glFlush();
 	glutSwapBuffers();
 }
@@ -97,6 +98,10 @@ void keyboardCB(unsigned char key, int x, int y){
 		colorG = (float) rand() / (float) RAND_MAX;
 		colorB = (float) rand() / (float) RAND_MAX;
 		break;
+	case 'T':
+		//scanf("%f", &transparency);
+		transparency = (float) rand() / (float) RAND_MAX;
+		break;
 	case 27: // Escape key
 		glutDestroyWindow(windowID);
 		exit(0);
@@ -112,6 +117,8 @@ int main(int argc, char **argv){
 	glutInitWindowPosition(100, 100);
 	windowID = glutCreateWindow("OpenGL - Rotating a Sphere");
 	initRendering();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glutDisplayFunc(drawCube);
 	glutReshapeFunc(handleResize);
