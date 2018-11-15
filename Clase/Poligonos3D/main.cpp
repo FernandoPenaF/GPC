@@ -1,9 +1,11 @@
 #include <GL/glut.h>
-#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 float angle = 0.0;
+float colorR = 0.3, colorG = 0.3, colorB = 0.3;
 float sX = 1.0, sY = 1.0, sZ = 1.0;
-bool rotate = false;
+bool rotate = false, seed = false;
 int windowID;
 
 void drawCube(){
@@ -13,20 +15,41 @@ void drawCube(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	// Add an ambient light
+	GLfloat ambientColor[] = { 0.2, 0.2, 0.2, 1.0 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+
+	// Add a positioned light
+	GLfloat lightColor0[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat lightPos0[] = { 4.0, 0.0, 0.0, 1.0 };
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+
 	glTranslatef(0.0, 0.0, -5.0);
-	if(rotate)
-		glRotatef(angle, 1.0, 0.0, 0.0);
-	//glRotatef(angle, 1.0, 1.0, 0.0);
-	//glRotatef(angle, 0.0, 0.0, 1.0);
-
+	glColor3f(colorR, colorG, colorB);
 	glScalef(sX, sY, sZ);
-	//glutWireCube(1.0);
-
-	glutWireSphere(0.75, 8, 6);
-	//glutWireCone(0.7, 2.0, 7, 6);
+	if (rotate) {
+		glRotatef(angle, 1.0, 0.0, 0.0);
+		glRotatef(angle, 1.0, 0.0, 1.0);
+	}
+	
+	glutSolidCube(1);
 
 	glFlush();
 	glutSwapBuffers();
+}
+
+// Initializes 3D rendering
+void initRendering()
+{
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
+
+	// Set the color of the background
+	glClearColor(0.7f, 0.8f, 1.0f, 1.0f);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
 }
 
 // Function for increasing the angle variable smoothly, 
@@ -68,6 +91,12 @@ void keyboardCB(unsigned char key, int x, int y){
 	case 'm':
 		rotate = false;
 		break;
+	case 'C':
+		srand(static_cast <unsigned> (time(0)));
+		colorR = (float) rand() / (float) RAND_MAX;
+		colorG = (float) rand() / (float) RAND_MAX;
+		colorB = (float) rand() / (float) RAND_MAX;
+		break;
 	case 27: // Escape key
 		glutDestroyWindow(windowID);
 		exit(0);
@@ -82,10 +111,10 @@ int main(int argc, char **argv){
 	glutInitWindowSize(700, 700);
 	glutInitWindowPosition(100, 100);
 	windowID = glutCreateWindow("OpenGL - Rotating a Sphere");
+	initRendering();
 
 	glutDisplayFunc(drawCube);
 	glutReshapeFunc(handleResize);
-
 	glutTimerFunc(25, update, 0);
 	glutKeyboardFunc(keyboardCB);
 	glutMainLoop();

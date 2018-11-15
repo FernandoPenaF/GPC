@@ -1,3 +1,6 @@
 ﻿  main.cpp
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(6): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(19): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(19): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.exe
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.pdb (Full PDB)
