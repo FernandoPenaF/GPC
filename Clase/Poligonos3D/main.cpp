@@ -4,7 +4,7 @@
 #include <ctime>
 
 float transparency = 1.0;
-float angle = 0.0, k = -5.0;
+float angle = 0.0, zCube = -5.0, zSphere = -10.0;
 float sX = 1.0, sY = 1.0, sZ = 1.0;
 bool rotate = false, ida = true, move = false;
 int windowID;
@@ -29,18 +29,27 @@ void drawCube(){
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 
-	glTranslatef(0.0, 0.0, k);
-	glScalef(sX, sY, sZ);
-	if (rotate) {
-		glRotatef(angle, 1.0, 0.0, 0.0);
-		glRotatef(angle, 1.0, 0.0, 1.0);
-	}
+	glPushMatrix();
+		glTranslatef(-1.0, 0.0, zCube);
+		glScalef(sX, sY, sZ);
+		if (rotate) {
+			glRotatef(angle, 1.0, 0.0, 0.0);
+			glRotatef(angle, 1.0, 0.0, 1.0);
+		}
+		glColor4f(colorCube[0], colorCube[1], colorCube[2], colorCube[3]);
+		glutSolidCube(1);
+	glPopMatrix();
 
-	glColor4f(colorCube[0], colorCube[1], colorCube[2], colorCube[3]);
-	glutSolidCube(1);
-
-	glColor4f(colorSphere[0], colorSphere[1], colorSphere[2], colorSphere[3]);
-	glutSolidSphere(0.75, 8, 6);
+	glPushMatrix();
+		glTranslatef(1.0, 0.0, zSphere);
+		glScalef(sX, sY, sZ);
+		if (rotate) {
+			glRotatef(angle, 1.0, 1.0, 0.0);
+			glRotatef(angle, 1.0, 0.0, 0.0);
+		}
+		glColor4f(colorSphere[0], colorSphere[1], colorSphere[2], colorSphere[3]);
+		glutSolidSphere(0.5, 8, 6);
+	glPopMatrix();
 
 	glFlush();
 	glutSwapBuffers();
@@ -69,16 +78,18 @@ void update(int value) {
 	}
 
 	if (move) {
-		if (k <= -15) {
+		if (zCube <= -15) {
 			ida = false;
-		} else if (k >= -5) {
+		} else if (zCube >= -5) {
 			ida = true;
 		}
 
 		if (ida) {
-			k -= 0.1f;
+			zCube -= 0.1f;
+			zSphere += 0.1f;
 		} else {
-			k += 0.1f;
+			zCube += 0.1f;
+			zSphere -= 0.1f;
 		}
 	}
 
@@ -139,7 +150,7 @@ int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	srand(static_cast <unsigned> (time(0)));
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(900, 900);
+	glutInitWindowSize(1100, 900);
 	glutInitWindowPosition(0, 0);
 	windowID = glutCreateWindow("OpenGL - Rotating a Sphere");
 	initRendering();
