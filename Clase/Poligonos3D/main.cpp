@@ -3,11 +3,14 @@
 #include <cstdlib>
 #include <ctime>
 
-float angle = 0.0;
-float colorR = 0.3, colorG = 0.3, colorB = 0.3, transparency = 1.0;
+float transparency = 1.0;
+float angle = 0.0, k = -5.0;
 float sX = 1.0, sY = 1.0, sZ = 1.0;
-bool rotate = false, seed = false;
+bool rotate = false, ida = true, move = false;
 int windowID;
+
+GLfloat colorCube[] = {0.5, 0.5, 0.5, 1.0};
+GLfloat colorSphere[] = { 0.5, 0.5, 0.5, 1.0 };
 
 void drawCube(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -26,23 +29,25 @@ void drawCube(){
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 
-	glTranslatef(0.0, 0.0, -5.0);
-	glColor4f(colorR, colorG, colorB, transparency);
+	glTranslatef(0.0, 0.0, k);
 	glScalef(sX, sY, sZ);
 	if (rotate) {
 		glRotatef(angle, 1.0, 0.0, 0.0);
 		glRotatef(angle, 1.0, 0.0, 1.0);
 	}
-	
+
+	glColor4f(colorCube[0], colorCube[1], colorCube[2], colorCube[3]);
 	glutSolidCube(1);
-	//glutSolidSphere(0.75, 8, 6);
+
+	glColor4f(colorSphere[0], colorSphere[1], colorSphere[2], colorSphere[3]);
+	glutSolidSphere(0.75, 8, 6);
+
 	glFlush();
 	glutSwapBuffers();
 }
 
 // Initializes 3D rendering
-void initRendering()
-{
+void initRendering() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 
@@ -58,8 +63,23 @@ void initRendering()
 // It can also be implemented using the modulo operator.
 void update(int value) {
 	angle += 1.0f;
+
 	if (angle > 360) {
 		angle -= 360;
+	}
+
+	if (move) {
+		if (k <= -15) {
+			ida = false;
+		} else if (k >= -5) {
+			ida = true;
+		}
+
+		if (ida) {
+			k -= 0.1f;
+		} else {
+			k += 0.1f;
+		}
 	}
 
 	glutPostRedisplay();
@@ -76,9 +96,12 @@ void handleResize(int w, int h){
 
 void keyboardCB(unsigned char key, int x, int y){
 	switch (key){
+	case 'M':
+		move = !move;
+		break;
 	case 'E':
-		sX = 2.0;
-		sY = 2.0;
+		sX = 1.5;
+		sY = 1.5;
 		sZ = 1.0;
 		break;
 	case 'e':
@@ -86,21 +109,23 @@ void keyboardCB(unsigned char key, int x, int y){
 		sY = 1.0;
 		sZ = 1.0;
 		break;
-	case 'M':
-		rotate = true;
-		break;
-	case 'm':
-		rotate = false;
+	case 'R':
+		rotate = !rotate;
 		break;
 	case 'C':
-		srand(static_cast <unsigned> (time(0)));
-		colorR = (float) rand() / (float) RAND_MAX;
-		colorG = (float) rand() / (float) RAND_MAX;
-		colorB = (float) rand() / (float) RAND_MAX;
+		for (int i = 0; i < 3; i++){
+			colorCube[i] = (float) rand() / (float) RAND_MAX;
+			colorSphere[i] = (float) rand() / (float) RAND_MAX;
+		}
+		//printf("R: %f, G: %f, B: %f\n", colorCube[0], colorCube[1], colorCube[2]);
+		//printf("R: %f, G: %f, B: %f\n", colorSphere[0], colorSphere[1], colorSphere[2]);
 		break;
 	case 'T':
-		//scanf("%f", &transparency);
-		transparency = (float) rand() / (float) RAND_MAX;
+		scanf("%f", &transparency);
+		colorCube[3] = transparency;
+		colorSphere[3] = (float)rand() / (float)RAND_MAX;
+		//printf("Transparency: %f\n", colorCube[3]);
+		//printf("Transparency: %f\n", colorSphere[3]);
 		break;
 	case 27: // Escape key
 		glutDestroyWindow(windowID);
@@ -112,9 +137,10 @@ void keyboardCB(unsigned char key, int x, int y){
 
 int main(int argc, char **argv){
 	glutInit(&argc, argv);
+	srand(static_cast <unsigned> (time(0)));
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(700, 700);
-	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(900, 900);
+	glutInitWindowPosition(0, 0);
 	windowID = glutCreateWindow("OpenGL - Rotating a Sphere");
 	initRendering();
 	glEnable(GL_BLEND);
