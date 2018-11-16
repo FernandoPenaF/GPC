@@ -2,17 +2,46 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 
+struct cube {
+	int len;
+	float posX;
+	float posY;
+	float posZ;
+	GLfloat color[4];
+};
+
+int i = 0;
 float transparency = 1.0;
 float angle = 0.0, zCube = -5.0, zSphere = -10.0;
 float sX = 1.0, sY = 1.0, sZ = 1.0;
 bool rotate = false, ida = true, move = false;
 int windowID;
 
+std::vector<cube> cubes;
+
 GLfloat colorCube[] = {0.5, 0.5, 0.5, 1.0};
 GLfloat colorSphere[] = { 0.5, 0.5, 0.5, 1.0 };
 
-void drawCube(){
+cube getCube(int l, float x, float y, float z, float c1, float c2, float c3 ,float c4) {
+	cube cube1;
+	cube1.len = l;
+	cube1.posX = x;
+	cube1.posY = y;
+	cube1.posZ = z;
+	cube1.color[0] = c1;
+	cube1.color[1] = c2;
+	cube1.color[2] = c3;
+	cube1.color[3] = c4;
+	return cube1;
+}
+
+void addCube(int l, float x, float y, float z, float c1, float c2, float c3, float c4) {
+	cubes.push_back(getCube(l, x, y, z, c1, c2, c3, c4));
+}
+
+void drawCube() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Reset transformations
@@ -29,27 +58,21 @@ void drawCube(){
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 
-	glPushMatrix();
-		glTranslatef(-1.0, 0.0, zCube);
-		glScalef(sX, sY, sZ);
-		if (rotate) {
-			glRotatef(angle, 1.0, 0.0, 0.0);
-			glRotatef(angle, 1.0, 0.0, 1.0);
-		}
-		glColor4f(colorCube[0], colorCube[1], colorCube[2], colorCube[3]);
-		glutSolidCube(1);
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(1.0, 0.0, zSphere);
-		glScalef(sX, sY, sZ);
-		if (rotate) {
-			glRotatef(angle, 1.0, 1.0, 0.0);
-			glRotatef(angle, 1.0, 0.0, 0.0);
-		}
-		glColor4f(colorSphere[0], colorSphere[1], colorSphere[2], colorSphere[3]);
-		glutSolidSphere(0.5, 8, 6);
-	glPopMatrix();
+	for (i = 0; i < cubes.size(); i++) {
+		cube c = cubes[i];
+		
+		glPushMatrix();
+			glTranslatef(c.posX, c.posY, c.posZ);
+			glScalef(sX, sY, sZ);
+			if (rotate) {
+				glRotatef(angle, 1.0, 0.0, 0.0);
+				glRotatef(angle, 1.0, 0.0, 1.0);
+			}
+			glColor4f(colorCube[0], colorCube[1], colorCube[2], colorCube[3]);
+			//printf("R: %f, G: %f, B: %f\n", c.color[0], c.color[1], c.color[2]);
+			glutSolidCube(c.len);
+		glPopMatrix();
+	}
 
 	glFlush();
 	glutSwapBuffers();
@@ -78,6 +101,7 @@ void update(int value) {
 	}
 
 	if (move) {
+		zCube = cubes[0].posZ;
 		if (zCube <= -15) {
 			ida = false;
 		} else if (zCube >= -5) {
@@ -85,11 +109,11 @@ void update(int value) {
 		}
 
 		if (ida) {
-			zCube -= 0.1f;
-			zSphere += 0.1f;
+			cubes[0].posZ -= 0.1f;
+			cubes[1].posZ += 0.1f;
 		} else {
-			zCube += 0.1f;
-			zSphere -= 0.1f;
+			cubes[0].posZ += 0.1f;
+			cubes[1].posZ -= 0.1f;
 		}
 	}
 
@@ -124,12 +148,16 @@ void keyboardCB(unsigned char key, int x, int y){
 		rotate = !rotate;
 		break;
 	case 'C':
-		for (int i = 0; i < 3; i++){
-			colorCube[i] = (float) rand() / (float) RAND_MAX;
-			colorSphere[i] = (float) rand() / (float) RAND_MAX;
-		}
-		//printf("R: %f, G: %f, B: %f\n", colorCube[0], colorCube[1], colorCube[2]);
-		//printf("R: %f, G: %f, B: %f\n", colorSphere[0], colorSphere[1], colorSphere[2]);
+		colorCube[0] = (float)rand() / (float)RAND_MAX;
+		colorCube[1] = (float)rand() / (float)RAND_MAX;
+		colorCube[2] = (float)rand() / (float)RAND_MAX;
+		/*for (int i = 0; i < cubes.size(); i++){
+			cube c = cubes[i];
+			c.color[0] = (float) rand() / (float)RAND_MAX;
+			c.color[1] = (float) rand() / (float) RAND_MAX;
+			c.color[2] = (float) rand() / (float) RAND_MAX;
+			//printf("R: %f, G: %f, B: %f\n", c.color[0], c.color[1], c.color[2]);
+		}*/
 		break;
 	case 'T':
 		scanf("%f", &transparency);
@@ -156,6 +184,9 @@ int main(int argc, char **argv){
 	initRendering();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	addCube(1, -1.0, 0.0, -5.0, colorCube[0], colorCube[1], colorCube[2], colorCube[3]);
+	addCube(1, 1.0, 0.0, -10.0, colorCube[0], colorCube[1], colorCube[2], colorCube[3]);
 
 	glutDisplayFunc(drawCube);
 	glutReshapeFunc(handleResize);

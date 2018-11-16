@@ -1,7 +1,8 @@
 ﻿  main.cpp
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(23): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(23): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(134): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(52): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(52): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(61): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(163): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.exe
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.pdb (Full PDB)
