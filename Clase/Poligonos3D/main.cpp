@@ -9,13 +9,14 @@ struct cube {
 	float posX;
 	float posY;
 	float posZ;
+	bool ida;
 };
 
 int i = 0;
 float transparency = 1.0;
-float angle = 0.0, zCube = -5.0, zSphere = -10.0;
+float angle = 0.0, zSphere = -10.0;
 float sX = 1.0, sY = 1.0, sZ = 1.0;
-bool rotate = false, ida = true, move = false;
+bool rotate = false, move = false;
 int windowID;
 
 std::vector<cube> cubes;
@@ -95,19 +96,21 @@ void update(int value) {
 	}
 
 	if (move) {
-		zCube = cubes[0].posZ;
-		if (zCube <= -15) {
-			ida = false;
-		} else if (zCube >= -5) {
-			ida = true;
-		}
+		for (int i = 0; i < cubes.size(); i++){
+			cube c = cubes[i];
+			float z = c.posZ;
 
-		if (ida) {
-			cubes[0].posZ -= 0.1f;
-			cubes[1].posZ += 0.1f;
-		} else {
-			cubes[0].posZ += 0.1f;
-			cubes[1].posZ -= 0.1f;
+			if (z <= -15) {
+				c.ida = false;
+			} else if (z >= -5) {
+				c.ida = true;
+			}
+
+			if (c.ida) {
+				cubes[i].posZ -= 0.1f;
+			} else {
+				cubes[i].posZ += 0.1f;
+			}
 		}
 	}
 
@@ -130,10 +133,11 @@ float randomFloat(float min, float max) {
 void keyboardCB(unsigned char key, int x, int y){
 	switch (key){
 	case 'A':
-		float x;
-		x = randomFloat(-2.0, 2.0);
-		printf("R: %f\n", x);
-		addCube(1, x, 0.0, -6);
+		float x, y, z;
+		x = randomFloat(-2.5, 2.5);
+		y = randomFloat(-1.5, 1.5);
+		z = randomFloat(-10.0, -3.0);
+		addCube(1, x, y, z);
 		break;
 	case 'M':
 		move = !move;
@@ -183,7 +187,7 @@ int main(int argc, char **argv){
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	addCube(1, -1.0, 0.0, -5.0);
-	addCube(1, 1.0, 0.0, -10.0);
+	//addCube(1, 1.0, 0.0, -10.0);
 
 	glutDisplayFunc(drawCube);
 	glutReshapeFunc(handleResize);
