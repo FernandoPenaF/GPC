@@ -1,13 +1,23 @@
 ﻿  main.cpp
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(52): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(52): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(61): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(103): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(166): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(174): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(152): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(81): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(81): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(90): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(105): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(157): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(175): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(215): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(216): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(221): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(224): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(225): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(230): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(260): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(266): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(275): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(279): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(237): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(173): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(273): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.exe
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.pdb (Full PDB)
