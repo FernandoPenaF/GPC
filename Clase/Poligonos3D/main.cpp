@@ -96,17 +96,16 @@ void update(int value) {
 	}
 
 	if (move) {
-		for (int i = 0; i < cubes.size(); i++){
-			cube c = cubes[i];
-			float z = c.posZ;
+		for (int i = 0; i < cubes.size(); i++) {
+			float z = cubes[i].posZ;
 
 			if (z <= -15) {
-				c.ida = false;
-			} else if (z >= -5) {
-				c.ida = true;
+				cubes[i].ida = false;
+			} else if (z >= -5 ) {
+				cubes[i].ida = true;
 			}
 
-			if (c.ida) {
+			if (cubes[i].ida) {
 				cubes[i].posZ -= 0.1f;
 			} else {
 				cubes[i].posZ += 0.1f;
@@ -186,7 +185,7 @@ int main(int argc, char **argv){
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	addCube(1, -1.0, 0.0, -5.0);
+	//addCube(1, -1.0, 0.0, -5.0);
 	//addCube(1, 1.0, 0.0, -10.0);
 
 	glutDisplayFunc(drawCube);
