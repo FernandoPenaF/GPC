@@ -34,6 +34,7 @@ int windowID;
 std::vector<cube> cubes;
 std::vector<sphere> spheres;
 std::vector<sphere> ellipses;
+std::vector<cube> bars;
 
 cube generateCube(int l, float x, float y, float z, float r, float g, float b, float t) {
 	cube cube1;
@@ -90,9 +91,8 @@ void addEllipse(double rad, int sl, int stk, float x, float y, float z, float r,
 	ellipses.push_back(generateEllipse(rad, sl, stk, x, y, z, r, g, b, t));
 }
 
-void drawCube() {
+void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	// Reset transformations
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -149,6 +149,15 @@ void drawCube() {
 		glPopMatrix();
 	}
 
+	for (int i = -22; i <= 22; i = i + 2) {
+		glPushMatrix();
+			glTranslatef(i, 0.0, -30.0);
+			glScalef(1.0, 26.0, 1.0);
+			glColor4f(0.2, 0.2, 0.2, 1.0);
+			glutSolidCube(1);
+		glPopMatrix();
+	}
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -196,9 +205,9 @@ void update(int value) {
 		for (int i = 0; i < cubes.size(); i++) {
 			float z = cubes[i].posZ;
 
-			if (z <= -15) {
+			if (z <= -27.0) {
 				cubes[i].ida = false;
-			} else if (z >= -5) {
+			} else if (z >= -10.0) {
 				cubes[i].ida = true;
 			}
 
@@ -214,18 +223,18 @@ void update(int value) {
 		for (int i = 0; i < spheres.size(); i++) {
 			float x = spheres[i].posX;
 
-			if (x <= -3) {
+			if (x <= 0) {
 				spheres[i].ida = false;
-			} else if (x >= 5) {
+			} else if (x >= 10) {
 				spheres[i].ida = true;
 			}
 
 			if (spheres[i].ida) {
 				spheres[i].posX -= 0.1f;
-				spheres[i].posZ += 0.1f;
+				spheres[i].posZ += 0.3f;
 			} else {
 				spheres[i].posX += 0.1f;
-				spheres[i].posZ -= 0.1f;
+				spheres[i].posZ -= 0.3f;
 			}
 		}
 	}
@@ -243,11 +252,11 @@ void update(int value) {
 			if (ellipses[i].ida) {
 				ellipses[i].posX += 0.05f;
 				ellipses[i].posY -= 0.05f;
-				ellipses[i].posZ += 0.05f;
+				ellipses[i].posZ += 0.15f;
 			} else {
 				ellipses[i].posX -= 0.05f;
 				ellipses[i].posY += 0.05f;
-				ellipses[i].posZ -= 0.05f;
+				ellipses[i].posZ -= 0.15f;
 			}
 		}
 	}
@@ -271,31 +280,31 @@ float randomFloat(float min, float max) {
 void keyboardCB(unsigned char key, int x, int y){
 	switch (key){
 	case 'A':
-		x = randomFloat(-2.5, 2.5);
-		y = randomFloat(-1.5, 1.5);
-		z = randomFloat(-10.0, -3.0);
+		x = randomFloat(-10, 10);
+		y = randomFloat(-3.5, 3.5);
+		z = randomFloat(-15.0, -10.0);
 		r = randomFloat(0, 1);
 		g = randomFloat(0, 1);
 		b = randomFloat(0, 1);
 		addCube(1, x, y, z, r, g, b, cubeTransparency);
 		break;
 	case 'S':
-		x = randomFloat(-2.5, 2.5);
-		y = randomFloat(-1.5, 1.5);
-		z = randomFloat(-10.0, -3.0);
+		x = randomFloat(-7.5, 7.5);
+		y = randomFloat(-2.5, 2.5);
+		z = randomFloat(-20.0, -7.0);
 		r = randomFloat(0, 1);
 		g = randomFloat(0, 1);
 		b = randomFloat(0, 1);
 		addSphere(0.5, 50, 50, x, y, z, r, g, b, sphereTransparency);
 		break;
 	case 'D':
-		x = randomFloat(-2.5, 2.5);
-		y = randomFloat(-1.5, 1.5);
-		z = randomFloat(-10.0, -3.0);
+		x = randomFloat(-5.0, 5.0);
+		y = randomFloat(-3.0, 1.0);
+		z = randomFloat(-20.0, -7.0);
 		r = randomFloat(0, 1);
 		g = randomFloat(0, 1);
 		b = randomFloat(0, 1);
-		addEllipse(0.5, 20, 10, x, y, z, r, g, b, ellipseTransparency);
+		addEllipse(0.75, 20, 10, x, y, z, r, g, b, ellipseTransparency);
 		break;
 	case 'M':
 		cubeMove = !cubeMove;
@@ -380,14 +389,14 @@ int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	srand(static_cast <unsigned> (time(0)));
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(1100, 900);
+	glutInitWindowSize(1600, 900);
 	glutInitWindowPosition(0, 0);
 	windowID = glutCreateWindow("OpenGL - Chaos");
 	initRendering();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glutDisplayFunc(drawCube);
+	glutDisplayFunc(draw);
 	glutReshapeFunc(handleResize);
 	glutTimerFunc(25, update, 0);
 	glutKeyboardFunc(keyboardCB);

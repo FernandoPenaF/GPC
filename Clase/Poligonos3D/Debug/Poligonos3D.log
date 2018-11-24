@@ -4,27 +4,29 @@ c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(101): warning C4305: 'ini
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(110): warning C4018: '<': no coinciden signed/unsigned
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(125): warning C4018: '<': no coinciden signed/unsigned
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(137): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(196): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(214): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(234): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(274): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(275): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(280): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(154): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(156): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(205): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(223): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(243): warning C4018: '<': no coinciden signed/unsigned
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(283): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(284): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(289): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(292): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(293): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(298): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(338): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(344): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(350): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(301): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(302): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(307): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(347): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(353): warning C4018: '<': no coinciden signed/unsigned
 c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(359): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(363): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(367): warning C4018: '<': no coinciden signed/unsigned
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(306): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(368): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(372): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(376): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(315): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
-c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(357): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\lpenaf\desktop\gpc\clase\poligonos3d\main.cpp(366): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.exe
   Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos3D\Debug\Poligonos3D.pdb (Full PDB)
