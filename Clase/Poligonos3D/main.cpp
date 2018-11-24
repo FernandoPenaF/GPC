@@ -25,14 +25,15 @@ struct sphere {
 };
 
 float x, y, z, r, g, b;
-float cubeTransparency = 1.0, cubeScale = 1.0, sphereTransparency = 1.0, sphereScale = 1.0;
-float scaleCube[3], scaleSphere[3];
-float cubeAngle = 0.0, sphereAngle = 0.0;
-bool cubeRotate = false, cubeMove = false, sphereMove = false;
+float cubeTransparency = 1.0, sphereTransparency = 1.0, ellipseTransparency = 1.0, cubeScale, sphereScale, ellipseScale;
+float scaleCube[3], scaleSphere[3], scaleEllipse[3];
+float cubeAngle = 0.0, ellipseAngle = 0.0;
+bool cubeRotate = false, cubeMove = false, sphereMove = false, ellipseRotate = false, ellipseMove = false;
 int windowID;
 
 std::vector<cube> cubes;
 std::vector<sphere> spheres;
+std::vector<sphere> ellipses;
 
 cube generateCube(int l, float x, float y, float z, float r, float g, float b, float t) {
 	cube cube1;
@@ -62,12 +63,31 @@ sphere generateSphere(double rad, int sl, int stk, float x, float y, float z, fl
 	return sphere1;
 }
 
+sphere generateEllipse(double rad, int sl, int stk, float x, float y, float z, float r, float g, float b, float t) {
+	sphere ellipse1;
+	ellipse1.radius = rad;
+	ellipse1.slices = sl;
+	ellipse1.stacks = stk;
+	ellipse1.posX = x;
+	ellipse1.posY = y;
+	ellipse1.posZ = z;
+	ellipse1.color[0] = r;
+	ellipse1.color[1] = g;
+	ellipse1.color[2] = b;
+	ellipse1.color[3] = t;
+	return ellipse1;
+}
+
 void addCube(int l, float x, float y, float z, float r, float g, float b, float t) {
 	cubes.push_back(generateCube(l, x, y, z, r, g, b, t));
 }
 
 void addSphere(double rad, int sl, int stk, float x, float y, float z, float r, float g, float b, float t) {
 	spheres.push_back(generateSphere(rad, sl, stk, x, y, z, r, g, b, t));
+}
+
+void addEllipse(double rad, int sl, int stk, float x, float y, float z, float r, float g, float b, float t) {
+	ellipses.push_back(generateEllipse(rad, sl, stk, x, y, z, r, g, b, t));
 }
 
 void drawCube() {
@@ -108,9 +128,24 @@ void drawCube() {
 		glPushMatrix();
 			glTranslatef(sp.posX, sp.posY, sp.posZ);
 			glScalef(scaleSphere[0], scaleSphere[1], scaleSphere[2]);
-			glRotatef(sphereAngle, 1.0, 1.0, 1.0); //Optional
+			//glRotatef(ellipseAngle, 1.0, 1.0, 1.0); //Optional
 			glColor4f(sp.color[0], sp.color[1], sp.color[2], sp.color[3]);
 			glutSolidSphere(sp.radius, sp.slices, sp.stacks);
+		glPopMatrix();
+	}
+
+	for (int i = 0; i < ellipses.size(); i++) {
+		sphere elip = ellipses[i];
+
+		glPushMatrix();
+			glTranslatef(elip.posX, elip.posY, elip.posZ);
+			glScalef(scaleEllipse[0], scaleEllipse[1], scaleEllipse[2]);
+			if (ellipseRotate) {
+				glRotatef(cubeAngle, 1.0, 0.0, 0.0);
+				glRotatef(ellipseAngle, 1.0, 0.0, 1.0);
+			}
+			glColor4f(elip.color[0], elip.color[1], elip.color[2], elip.color[3]);
+			glutSolidSphere(elip.radius, elip.slices, elip.stacks);
 		glPopMatrix();
 	}
 
@@ -136,6 +171,10 @@ void initRendering() {
 	scaleSphere[0] = 1.0;
 	scaleSphere[1] = 1.0;
 	scaleSphere[2] = 1.0;
+
+	scaleEllipse[0] = 1.0;
+	scaleEllipse[1] = 0.5;
+	scaleEllipse[2] = 1.0;
 }
 
 // Function for increasing the angle variable smoothly, 
@@ -143,14 +182,14 @@ void initRendering() {
 // It can also be implemented using the modulo operator.
 void update(int value) {
 	cubeAngle += 1.0f;
-	sphereAngle += 1.0f;
+	ellipseAngle += 1.0f;
 
 	if (cubeAngle > 360) {
 		cubeAngle -= 360;
 	}
 
-	if (sphereAngle > 360) {
-		sphereAngle -= 360;
+	if (ellipseAngle > 360) {
+		ellipseAngle -= 360;
 	}
 
 	if (cubeMove) {
@@ -159,7 +198,7 @@ void update(int value) {
 
 			if (z <= -15) {
 				cubes[i].ida = false;
-			} else if (z >= -5 ) {
+			} else if (z >= -5) {
 				cubes[i].ida = true;
 			}
 
@@ -177,18 +216,38 @@ void update(int value) {
 
 			if (x <= -3) {
 				spheres[i].ida = false;
-			}
-			else if (x >= 3) {
+			} else if (x >= 5) {
 				spheres[i].ida = true;
 			}
 
 			if (spheres[i].ida) {
 				spheres[i].posX -= 0.1f;
 				spheres[i].posZ += 0.1f;
-			}
-			else {
+			} else {
 				spheres[i].posX += 0.1f;
 				spheres[i].posZ -= 0.1f;
+			}
+		}
+	}
+
+	if (ellipseMove) {
+		for (int i = 0; i < ellipses.size(); i++) {
+			float y = ellipses[i].posY;
+
+			if (y <= -1.5) {
+				ellipses[i].ida = false;
+			} else if (y >= 1.5) {
+				ellipses[i].ida = true;
+			}
+
+			if (ellipses[i].ida) {
+				ellipses[i].posX += 0.05f;
+				ellipses[i].posY -= 0.05f;
+				ellipses[i].posZ += 0.05f;
+			} else {
+				ellipses[i].posX -= 0.05f;
+				ellipses[i].posY += 0.05f;
+				ellipses[i].posZ -= 0.05f;
 			}
 		}
 	}
@@ -227,14 +286,24 @@ void keyboardCB(unsigned char key, int x, int y){
 		r = randomFloat(0, 1);
 		g = randomFloat(0, 1);
 		b = randomFloat(0, 1);
-		addSphere(0.75, 8, 6, x, y, z, r, g, b, sphereTransparency);
+		addSphere(0.5, 50, 50, x, y, z, r, g, b, sphereTransparency);
+		break;
+	case 'D':
+		x = randomFloat(-2.5, 2.5);
+		y = randomFloat(-1.5, 1.5);
+		z = randomFloat(-10.0, -3.0);
+		r = randomFloat(0, 1);
+		g = randomFloat(0, 1);
+		b = randomFloat(0, 1);
+		addEllipse(0.5, 20, 10, x, y, z, r, g, b, ellipseTransparency);
 		break;
 	case 'M':
 		cubeMove = !cubeMove;
 		sphereMove = !sphereMove;
+		ellipseMove = !ellipseMove;
 		break;
 	case 'E':
-		scanf("%f %f", &cubeScale, &sphereScale);
+		scanf("%f %f %f", &cubeScale, &sphereScale, &ellipseScale);
 
 		scaleCube[0] = cubeScale;
 		scaleCube[1] = cubeScale;
@@ -243,6 +312,10 @@ void keyboardCB(unsigned char key, int x, int y){
 		scaleSphere[0] = sphereScale;
 		scaleSphere[1] = sphereScale;
 		scaleSphere[2] = sphereScale;
+
+		scaleEllipse[0] = ellipseScale;
+		scaleEllipse[1] = 0.5;
+		scaleEllipse[2] = ellipseScale;
 		break;
 	case 'e':
 		scaleCube[0] = 1.0;
@@ -252,9 +325,14 @@ void keyboardCB(unsigned char key, int x, int y){
 		scaleSphere[0] = 1.0;
 		scaleSphere[1] = 1.0;
 		scaleSphere[2] = 1.0;
+
+		scaleEllipse[0] = 1.0;
+		scaleEllipse[1] = 0.5;
+		scaleEllipse[2] = 1.0;
 		break;
 	case 'R':
 		cubeRotate = !cubeRotate;
+		ellipseRotate = !ellipseRotate;
 		break;
 	case 'C':
 		for (int i = 0; i < cubes.size(); i++){
@@ -268,9 +346,15 @@ void keyboardCB(unsigned char key, int x, int y){
 			spheres[i].color[1] = randomFloat(0, 1);
 			spheres[i].color[2] = randomFloat(0, 1);
 		}
+
+		for (int i = 0; i < ellipses.size(); i++) {
+			ellipses[i].color[0] = randomFloat(0, 1);
+			ellipses[i].color[1] = randomFloat(0, 1);
+			ellipses[i].color[2] = randomFloat(0, 1);
+		}
 		break;
 	case 'T':
-		scanf("%f %f", &cubeTransparency, &sphereTransparency);
+		scanf("%f %f %f", &cubeTransparency, &sphereTransparency, &ellipseTransparency);
 
 		for (int i = 0; i < cubes.size(); i++) {
 			cubes[i].color[3] = cubeTransparency;
@@ -278,6 +362,10 @@ void keyboardCB(unsigned char key, int x, int y){
 
 		for (int i = 0; i < spheres.size(); i++) {
 			spheres[i].color[3] = sphereTransparency;
+		}
+
+		for (int i = 0; i < ellipses.size(); i++) {
+			ellipses[i].color[3] = ellipseTransparency;
 		}
 		break;
 	case 27: // Escape key
