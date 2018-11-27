@@ -107,6 +107,8 @@ void draw() {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 
+	glViewport(390, 220, 1200, 675);
+
 	for (int i = 0; i < cubes.size(); i++) {
 		cube c = cubes[i];
 		
@@ -157,6 +159,16 @@ void draw() {
 			glutSolidCube(1);
 		glPopMatrix();
 	}
+
+	//viewport donde se van a poner las figuras que van a funcionar como boton
+	glViewport(10,220, 350, 675);
+	glLoadIdentity();
+	
+
+	//viewport en el que se van a mostrar los elementos del menu
+	glViewport(10, 10, 1580, 200);
+	glLoadIdentity();
+	
 
 	glFlush();
 	glutSwapBuffers();
