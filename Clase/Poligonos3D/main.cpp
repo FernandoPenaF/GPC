@@ -27,7 +27,7 @@ struct sphere {
 float x, y, z, r, g, b;
 float cubeTransparency = 1.0, sphereTransparency = 1.0, ellipseTransparency = 1.0, cubeScale, sphereScale, ellipseScale;
 float scaleCube[3], scaleSphere[3], scaleEllipse[3];
-float cubeAngle = 0.0, ellipseAngle = 0.0;
+float cubeAngle = 0.0, ellipseAngle = 0.0, menuAngle = 0.0;
 bool cubeRotate = false, cubeMove = false, sphereMove = false, ellipseRotate = false, ellipseMove = false;
 int windowID;
 
@@ -91,6 +91,15 @@ void addEllipse(double rad, int sl, int stk, float x, float y, float z, float r,
 	ellipses.push_back(generateEllipse(rad, sl, stk, x, y, z, r, g, b, t));
 }
 
+
+void polygons() {
+	glPushMatrix();
+	glRotatef(0.5, 1, 1, 0);
+	
+	glPopMatrix();
+}
+
+
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Reset transformations
@@ -102,13 +111,16 @@ void draw() {
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
 	// Add a positioned light
-	GLfloat lightColor0[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat lightPos0[] = { 4.0, 0.0, 0.0, 1.0 };
+	GLfloat lightColor0[] = { 1.0,1.0, 1.0, 1.0 };
+	GLfloat lightPos0[] = { 0.0, 0.0, 1.0, 1.0 };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 
-	glViewport(390, 220, 1200, 675);
 
+
+	//------------------------------------------------------------------------------------------------------------------
+	glViewport(390, 220, 1200, 675);
+	gluLookAt(0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	for (int i = 0; i < cubes.size(); i++) {
 		cube c = cubes[i];
 		
@@ -160,15 +172,54 @@ void draw() {
 		glPopMatrix();
 	}
 
+	
+	//------------------------------------------------------------------------------------------------------------------
 	//viewport donde se van a poner las figuras que van a funcionar como boton
 	glViewport(10,220, 350, 675);
+	//gluLookAt(0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	glLoadIdentity();
 	
+	glOrtho(-5, 5, -10, 10, 5, -5);
+	gluLookAt(0.0, 0.0, 6.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	
 
+	//ESFERA
+	glPushMatrix();
+	glTranslatef(0, 3, 0);
+	glScalef(1.5, 1, 1);
+	glRotatef(cubeAngle, 0, 0, 1);
+	glRotatef(cubeAngle, 0, 1, 0);
+	glRotatef(cubeAngle, 1, 0, 0);
+	glColor4f(1.0, 1.0, 1.0, 1.0);
+	glutSolidSphere(1.4, 30, 30);
+	glPopMatrix();
+
+	//CUBO
+	glPushMatrix();
+	glTranslatef(0,-0.3,0);
+	glRotatef(cubeAngle, 0, 0, 1);
+	glRotatef(cubeAngle, 0, 1, 0);
+	glColor4f(1.0, 1.0, 1.0, 1.0);
+	glutSolidCube(2);
+	glPopMatrix();
+
+	//ELIPSE
+	glPushMatrix();
+	glTranslatef(0, -3, 0);
+	glScalef(0.8,0.25,0.2);
+	glRotatef(cubeAngle, 0, 0, 1);
+	glRotatef(cubeAngle, 0, 1, 0);
+	glRotatef(cubeAngle, 1, 0, 0);
+	glColor4f(1.0,1.0,1.0, 1.0);
+	glutSolidSphere(3.5,30,30);
+	glPopMatrix();
+
+	//------------------------------------------------------------------------------------------------------------------
 	//viewport en el que se van a mostrar los elementos del menu
 	glViewport(10, 10, 1580, 200);
 	glLoadIdentity();
 	
+
 
 	glFlush();
 	glutSwapBuffers();
@@ -204,6 +255,12 @@ void initRendering() {
 void update(int value) {
 	cubeAngle += 1.0f;
 	ellipseAngle += 1.0f;
+	menuAngle += 2.0f;
+
+	if (menuAngle > 360) {
+		menuAngle -= 360;
+	}
+
 
 	if (cubeAngle > 360) {
 		cubeAngle -= 360;
