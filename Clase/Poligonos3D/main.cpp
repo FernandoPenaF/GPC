@@ -27,19 +27,17 @@ struct sphere {
 	GLfloat color[4];
 };
 
-float x, y, z, r, g, b;
-float cubeTransparency = 1.0, sphereTransparency = 1.0, ellipseTransparency = 1.0, cubeScale, sphereScale, ellipseScale;
+float xInit, yInit, z, r, g, b;
+float cubeTransparency = 1.0, sphereTransparency = 1.0, ellipseTransparency = 1.0, newScale = 1.0, newTransparency = 1.0;
 float scaleCube[3], scaleSphere[3], scaleEllipse[3];
 float cubeAngle = 0.0, ellipseAngle = 0.0, menuAngle = 0.0;
 bool cubeRotate = false, cubeMove = false, sphereMove = false, ellipseRotate = false, ellipseMove = false;
 int windowID;
-int onMouse=0;
-
+int onMouse = 0;
 
 std::vector<cube> cubes;
 std::vector<sphere> spheres;
 std::vector<sphere> ellipses;
-std::vector<cube> bars;
 
 cube generateCube(int l, float x, float y, float z, float r, float g, float b, float t) {
 	cube cube1;
@@ -104,7 +102,6 @@ void polygons() {
 	glPopMatrix();
 }
 
-
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Reset transformations
@@ -120,8 +117,6 @@ void draw() {
 	GLfloat lightPos0[] = { 0.0, 0.0, 1.0, 1.0 };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
-
-
 
 	//------------------------------------------------------------------------------------------------------------------
 	glViewport(390, 220, 1200, 675);
@@ -177,7 +172,6 @@ void draw() {
 		glPopMatrix();
 	}
 
-	
 	//------------------------------------------------------------------------------------------------------------------
 	//viewport donde se van a poner las figuras que van a funcionar como boton
 	glViewport(10,220, 350, 675);
@@ -187,36 +181,35 @@ void draw() {
 	glOrtho(-5, 5, -10, 10, 5, -5);
 	gluLookAt(0.0, 0.0, 6.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	
-
 	//ESFERA
 	glPushMatrix();
-	glTranslatef(0, 3, 0);
-	glScalef(1.5, 1, 1);
-	glRotatef(cubeAngle, 0, 0, 1);
-	glRotatef(cubeAngle, 0, 1, 0);
-	glRotatef(cubeAngle, 1, 0, 0);
-	glColor4f(1.0, 1.0, 1.0, 1.0);
-	glutSolidSphere(1.4, 30, 30);
+		glTranslatef(0, 3, 0);
+		glScalef(1.5, 1, 1);
+		glRotatef(cubeAngle, 0, 0, 1);
+		glRotatef(cubeAngle, 0, 1, 0);
+		glRotatef(cubeAngle, 1, 0, 0);
+		glColor4f(1.0, 1.0, 1.0, 1.0);
+		glutSolidSphere(1.4, 30, 30);
 	glPopMatrix();
 
 	//CUBO
 	glPushMatrix();
-	glTranslatef(0,-0.3,0);
-	glRotatef(cubeAngle, 0, 0, 1);
-	glRotatef(cubeAngle, 0, 1, 0);
-	glColor4f(1.0, 1.0, 1.0, 1.0);
-	glutSolidCube(2);
+		glTranslatef(0,-0.3,0);
+		glRotatef(cubeAngle, 0, 0, 1);
+		glRotatef(cubeAngle, 0, 1, 0);
+		glColor4f(1.0, 1.0, 1.0, 1.0);
+		glutSolidCube(2);
 	glPopMatrix();
 
 	//ELIPSE
 	glPushMatrix();
-	glTranslatef(0, -3, 0);
-	glScalef(0.8,0.25,0.2);
-	glRotatef(cubeAngle, 0, 0, 1);
-	glRotatef(cubeAngle, 0, 1, 0);
-	glRotatef(cubeAngle, 1, 0, 0);
-	glColor4f(1.0,1.0,1.0, 1.0);
-	glutSolidSphere(3.5,30,30);
+		glTranslatef(0, -3, 0);
+		glScalef(0.8,0.25,0.2);
+		glRotatef(cubeAngle, 0, 0, 1);
+		glRotatef(cubeAngle, 0, 1, 0);
+		glRotatef(cubeAngle, 1, 0, 0);
+		glColor4f(1.0,1.0,1.0, 1.0);
+		glutSolidSphere(3.5,30,30);
 	glPopMatrix();
 
 	//------------------------------------------------------------------------------------------------------------------
@@ -224,8 +217,6 @@ void draw() {
 	glViewport(10, 10, 1580, 200);
 	glLoadIdentity();
 	
-
-
 	glFlush();
 	glutSwapBuffers();
 }
@@ -265,7 +256,6 @@ void update(int value) {
 	if (menuAngle > 360) {
 		menuAngle -= 360;
 	}
-
 
 	if (cubeAngle > 360) {
 		cubeAngle -= 360;
@@ -351,9 +341,7 @@ float randomFloat(float min, float max) {
 	return ((float(rand()) / float(RAND_MAX)) * (max - min)) + min;
 }
 
-
-
-bool dentroCirculo(int x, int y) {
+bool dentroEsfera(int x, int y) {
 	// X (106-261)
 	// Y (45-245)
 	bool res = 0;
@@ -385,109 +373,109 @@ bool dentroCubo(int x, int y) {
 
 void keyboardCB(unsigned char key, int x, int y){
 	switch (key){
-	case 'A':
-		if (onMouse == 1 && dentroCubo(x, y)) {
-			x = randomFloat(-10, 10);
-			y = randomFloat(-3.5, 3.5);
-			z = randomFloat(-15.0, -10.0);
-			r = randomFloat(0, 1);
-			g = randomFloat(0, 1);
-			b = randomFloat(0, 1);
-			addCube(1, x, y, z, r, g, b, cubeTransparency);
-		}
-		
-		break;
-	case 'S':
-		if (onMouse == 1 && dentroCirculo(x, y)) {
-			x = randomFloat(-7.5, 7.5);
-			y = randomFloat(-2.5, 2.5);
-			z = randomFloat(-20.0, -7.0);
-			r = randomFloat(0, 1);
-			g = randomFloat(0, 1);
-			b = randomFloat(0, 1);
-			addSphere(0.5, 50, 50, x, y, z, r, g, b, sphereTransparency);
-		}
-		break;
-	case 'D':
-		if (onMouse == 1 && dentroElipsoide(x, y)) {
-			x = randomFloat(-5.0, 5.0);
-			y = randomFloat(-3.0, 1.0);
-			z = randomFloat(-20.0, -7.0);
-			r = randomFloat(0, 1);
-			g = randomFloat(0, 1);
-			b = randomFloat(0, 1);
-			addEllipse(0.75, 20, 10, x, y, z, r, g, b, ellipseTransparency);
-		}
-		break;
 	case 'M':
-		cubeMove = !cubeMove;
-		sphereMove = !sphereMove;
-		ellipseMove = !ellipseMove;
-		break;
-	case 'E':
-		scanf("%f %f %f", &cubeScale, &sphereScale, &ellipseScale);
+		if (onMouse == 1 && dentroCubo(x, y)) {
+			cubeMove = !cubeMove;
+		}
 
-		scaleCube[0] = cubeScale;
-		scaleCube[1] = cubeScale;
-		scaleCube[2] = cubeScale;
+		if (onMouse == 1 && dentroEsfera(x, y)) {
+			sphereMove = !sphereMove;
+		}
 
-		scaleSphere[0] = sphereScale;
-		scaleSphere[1] = sphereScale;
-		scaleSphere[2] = sphereScale;
-
-		scaleEllipse[0] = ellipseScale;
-		scaleEllipse[1] = 0.5;
-		scaleEllipse[2] = ellipseScale;
-		break;
-	case 'e':
-		scaleCube[0] = 1.0;
-		scaleCube[1] = 1.0;
-		scaleCube[2] = 1.0;
-
-		scaleSphere[0] = 1.0;
-		scaleSphere[1] = 1.0;
-		scaleSphere[2] = 1.0;
-
-		scaleEllipse[0] = 1.0;
-		scaleEllipse[1] = 0.5;
-		scaleEllipse[2] = 1.0;
-		break;
-	case 'R':
-		cubeRotate = !cubeRotate;
-		ellipseRotate = !ellipseRotate;
+		if (onMouse == 1 && dentroElipsoide(x, y)) {
+			ellipseMove = !ellipseMove;
+		}
 		break;
 	case 'C':
-		for (int i = 0; i < cubes.size(); i++){
-			cubes[i].color[0] = randomFloat(0, 1);
-			cubes[i].color[1] = randomFloat(0, 1);
-			cubes[i].color[2] = randomFloat(0, 1);
+		if (onMouse == 1 && dentroCubo(x, y)) {
+			for (int i = 0; i < cubes.size(); i++) {
+				cubes[i].color[0] = randomFloat(0, 1);
+				cubes[i].color[1] = randomFloat(0, 1);
+				cubes[i].color[2] = randomFloat(0, 1);
+			}
+		}
+		
+		if (onMouse == 1 && dentroEsfera(x, y)) {
+			for (int i = 0; i < spheres.size(); i++) {
+				spheres[i].color[0] = randomFloat(0, 1);
+				spheres[i].color[1] = randomFloat(0, 1);
+				spheres[i].color[2] = randomFloat(0, 1);
+			}
 		}
 
-		for (int i = 0; i < spheres.size(); i++) {
-			spheres[i].color[0] = randomFloat(0, 1);
-			spheres[i].color[1] = randomFloat(0, 1);
-			spheres[i].color[2] = randomFloat(0, 1);
+		if (onMouse == 1 && dentroElipsoide(x, y)) {
+			for (int i = 0; i < ellipses.size(); i++) {
+				ellipses[i].color[0] = randomFloat(0, 1);
+				ellipses[i].color[1] = randomFloat(0, 1);
+				ellipses[i].color[2] = randomFloat(0, 1);
+			}
+		}
+		break;
+	case 'R':
+		if (onMouse == 1 && dentroCubo(x, y)) {
+			cubeRotate = !cubeRotate;
+		}
+		if (onMouse == 1 && dentroElipsoide(x, y)) {
+			ellipseRotate = !ellipseRotate;
+		}
+		break;
+	case 'E':
+		if (onMouse == 1 && dentroCubo(x, y)) {
+			scanf("%f", &newScale);
+			if (newScale > 0) {
+				scaleCube[0] = newScale;
+				scaleCube[1] = newScale;
+				scaleCube[2] = newScale;
+			}
 		}
 
-		for (int i = 0; i < ellipses.size(); i++) {
-			ellipses[i].color[0] = randomFloat(0, 1);
-			ellipses[i].color[1] = randomFloat(0, 1);
-			ellipses[i].color[2] = randomFloat(0, 1);
+		if (onMouse == 1 && dentroEsfera(x, y)) {
+			scanf("%f", &newScale);
+			if (newScale > 0) {
+				scaleSphere[0] = newScale;
+				scaleSphere[1] = newScale;
+				scaleSphere[2] = newScale;
+			}
+		}
+
+		if (onMouse == 1 && dentroElipsoide(x, y)) {
+			scanf("%f", &newScale);
+			if (newScale > 0) {
+				scaleEllipse[0] = newScale;
+				scaleEllipse[1] = 0.5;
+				scaleEllipse[2] = newScale;
+			}
 		}
 		break;
 	case 'T':
-		scanf("%f %f %f", &cubeTransparency, &sphereTransparency, &ellipseTransparency);
-
-		for (int i = 0; i < cubes.size(); i++) {
-			cubes[i].color[3] = cubeTransparency;
+		if (onMouse == 1 && dentroCubo(x, y)) {
+			scanf("%f", &newTransparency);
+			if (newTransparency >= 0 && newTransparency <= 1) {
+				cubeTransparency = newTransparency;
+				for (int i = 0; i < cubes.size(); i++) {
+					cubes[i].color[3] = cubeTransparency;
+				}
+			}
 		}
 
-		for (int i = 0; i < spheres.size(); i++) {
-			spheres[i].color[3] = sphereTransparency;
+		if (onMouse == 1 && dentroEsfera(x, y)) {
+			scanf("%f", &newTransparency);
+			if (newTransparency >= 0 && newTransparency <= 1) {
+				sphereTransparency = newTransparency;
+				for (int i = 0; i < spheres.size(); i++) {
+					spheres[i].color[3] = sphereTransparency;
+				}
+			}
 		}
 
-		for (int i = 0; i < ellipses.size(); i++) {
-			ellipses[i].color[3] = ellipseTransparency;
+		if (onMouse == 1 && dentroElipsoide(x, y)) {
+			scanf("%f", &newTransparency);
+			if (newTransparency >= 0 && newTransparency <= 1) {
+				ellipseTransparency = newTransparency;
+				for (int i = 0; i < ellipses.size(); i++) {
+					ellipses[i].color[3] = ellipseTransparency;
+				}
+			}
 		}
 		break;
 	case 27: // Escape key
@@ -498,19 +486,46 @@ void keyboardCB(unsigned char key, int x, int y){
 	glutPostRedisplay();
 }
 
-
 void mouseClicks(int button, int state, int x, int y){
-
-
-
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		onMouse = 1;
-		cout << "x:\t" << x << "y:\t" << y << endl;
+		if (dentroCubo(x, y)) {
+			xInit = randomFloat(-10, 10);
+			yInit = randomFloat(-3.5, 3.5);
+			z = randomFloat(-15.0, -10.0);
+			r = randomFloat(0, 1);
+			g = randomFloat(0, 1);
+			b = randomFloat(0, 1);
+			addCube(1, xInit, yInit, z, r, g, b, cubeTransparency);
+		}
+
+		if (dentroEsfera(x, y)) {
+			xInit = randomFloat(-7.5, 7.5);
+			yInit = randomFloat(-2.5, 2.5);
+			z = randomFloat(-20.0, -7.0);
+			r = randomFloat(0, 1);
+			g = randomFloat(0, 1);
+			b = randomFloat(0, 1);
+			addSphere(0.5, 50, 50, xInit, yInit, z, r, g, b, sphereTransparency);
+		}
+
+		if (dentroElipsoide(x, y)) {
+			xInit = randomFloat(-5.0, 5.0);
+			yInit = randomFloat(-3.0, 1.0);
+			z = randomFloat(-20.0, -7.0);
+			r = randomFloat(0, 1);
+			g = randomFloat(0, 1);
+			b = randomFloat(0, 1);
+			addEllipse(0.75, 20, 10, xInit, yInit, z, r, g, b, ellipseTransparency);
+		}
+		//cout << "x:\t" << x << " y:\t" << y << endl;
 	}
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+		onMouse = 1;
+	}
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP) {
 		onMouse = 0;
 	}
-	
 }
 
 int main(int argc, char **argv){
