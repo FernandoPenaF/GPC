@@ -491,7 +491,7 @@ void mouseClicks(int button, int state, int x, int y){
 		if (dentroCubo(x, y)) {
 			xInit = randomFloat(-10, 10);
 			yInit = randomFloat(-3.5, 3.5);
-			z = randomFloat(-15.0, -10.0);
+			z = -15.0;
 			r = randomFloat(0, 1);
 			g = randomFloat(0, 1);
 			b = randomFloat(0, 1);
@@ -499,9 +499,9 @@ void mouseClicks(int button, int state, int x, int y){
 		}
 
 		if (dentroEsfera(x, y)) {
-			xInit = randomFloat(-7.5, 7.5);
+			xInit = randomFloat(-10.0, 10.0);
 			yInit = randomFloat(-2.5, 2.5);
-			z = randomFloat(-20.0, -7.0);
+			z = -15.0;
 			r = randomFloat(0, 1);
 			g = randomFloat(0, 1);
 			b = randomFloat(0, 1);
@@ -509,9 +509,9 @@ void mouseClicks(int button, int state, int x, int y){
 		}
 
 		if (dentroElipsoide(x, y)) {
-			xInit = randomFloat(-5.0, 5.0);
+			xInit = randomFloat(-10.0, 10.0);
 			yInit = randomFloat(-3.0, 1.0);
-			z = randomFloat(-20.0, -7.0);
+			z = -15.0;
 			r = randomFloat(0, 1);
 			g = randomFloat(0, 1);
 			b = randomFloat(0, 1);
