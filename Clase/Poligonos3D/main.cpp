@@ -1,8 +1,11 @@
 #include <GL/glut.h>
 #include <iostream>
+#include <string>
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+using std::cout;
+using std::endl;
 
 struct cube {
 	int len;
@@ -27,9 +30,11 @@ struct sphere {
 float x, y, z, r, g, b;
 float cubeTransparency = 1.0, sphereTransparency = 1.0, ellipseTransparency = 1.0, cubeScale, sphereScale, ellipseScale;
 float scaleCube[3], scaleSphere[3], scaleEllipse[3];
-float cubeAngle = 0.0, ellipseAngle = 0.0;
+float cubeAngle = 0.0, ellipseAngle = 0.0, menuAngle = 0.0;
 bool cubeRotate = false, cubeMove = false, sphereMove = false, ellipseRotate = false, ellipseMove = false;
 int windowID;
+int onMouse=0;
+
 
 std::vector<cube> cubes;
 std::vector<sphere> spheres;
@@ -91,6 +96,15 @@ void addEllipse(double rad, int sl, int stk, float x, float y, float z, float r,
 	ellipses.push_back(generateEllipse(rad, sl, stk, x, y, z, r, g, b, t));
 }
 
+
+void polygons() {
+	glPushMatrix();
+	glRotatef(0.5, 1, 1, 0);
+	
+	glPopMatrix();
+}
+
+
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Reset transformations
@@ -102,11 +116,16 @@ void draw() {
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
 	// Add a positioned light
-	GLfloat lightColor0[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat lightPos0[] = { 4.0, 0.0, 0.0, 1.0 };
+	GLfloat lightColor0[] = { 1.0,1.0, 1.0, 1.0 };
+	GLfloat lightPos0[] = { 0.0, 0.0, 1.0, 1.0 };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
 
+
+
+	//------------------------------------------------------------------------------------------------------------------
+	glViewport(390, 220, 1200, 675);
+	gluLookAt(0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	for (int i = 0; i < cubes.size(); i++) {
 		cube c = cubes[i];
 		
@@ -158,6 +177,55 @@ void draw() {
 		glPopMatrix();
 	}
 
+	
+	//------------------------------------------------------------------------------------------------------------------
+	//viewport donde se van a poner las figuras que van a funcionar como boton
+	glViewport(10,220, 350, 675);
+	//gluLookAt(0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	glLoadIdentity();
+	
+	glOrtho(-5, 5, -10, 10, 5, -5);
+	gluLookAt(0.0, 0.0, 6.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	
+
+	//ESFERA
+	glPushMatrix();
+	glTranslatef(0, 3, 0);
+	glScalef(1.5, 1, 1);
+	glRotatef(cubeAngle, 0, 0, 1);
+	glRotatef(cubeAngle, 0, 1, 0);
+	glRotatef(cubeAngle, 1, 0, 0);
+	glColor4f(1.0, 1.0, 1.0, 1.0);
+	glutSolidSphere(1.4, 30, 30);
+	glPopMatrix();
+
+	//CUBO
+	glPushMatrix();
+	glTranslatef(0,-0.3,0);
+	glRotatef(cubeAngle, 0, 0, 1);
+	glRotatef(cubeAngle, 0, 1, 0);
+	glColor4f(1.0, 1.0, 1.0, 1.0);
+	glutSolidCube(2);
+	glPopMatrix();
+
+	//ELIPSE
+	glPushMatrix();
+	glTranslatef(0, -3, 0);
+	glScalef(0.8,0.25,0.2);
+	glRotatef(cubeAngle, 0, 0, 1);
+	glRotatef(cubeAngle, 0, 1, 0);
+	glRotatef(cubeAngle, 1, 0, 0);
+	glColor4f(1.0,1.0,1.0, 1.0);
+	glutSolidSphere(3.5,30,30);
+	glPopMatrix();
+
+	//------------------------------------------------------------------------------------------------------------------
+	//viewport en el que se van a mostrar los elementos del menu
+	glViewport(10, 10, 1580, 200);
+	glLoadIdentity();
+	
+
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -192,6 +260,12 @@ void initRendering() {
 void update(int value) {
 	cubeAngle += 1.0f;
 	ellipseAngle += 1.0f;
+	menuAngle += 2.0f;
+
+	if (menuAngle > 360) {
+		menuAngle -= 360;
+	}
+
 
 	if (cubeAngle > 360) {
 		cubeAngle -= 360;
@@ -277,34 +351,73 @@ float randomFloat(float min, float max) {
 	return ((float(rand()) / float(RAND_MAX)) * (max - min)) + min;
 }
 
+
+
+bool dentroCirculo(int x, int y) {
+	// X (106-261)
+	// Y (45-245)
+	bool res = 0;
+	if (x>= 106 && x<=261 && y>=45 && y<= 245 ) {
+		res = 1;
+	}
+	return res;
+}
+
+bool dentroElipsoide(int x, int y) {
+	// x 83-538
+	// y 473-592
+	bool res = 0;
+	if (x >= 83 && x <= 538 && y >= 473 && y <= 592) {
+		res = 1;
+	}
+	return res;
+}
+
+bool dentroCubo(int x, int y) {
+	// x 148-218
+	// y 276-445
+	bool res = 0;
+	if (x >= 148 && x <= 218 && y >= 276 && y <= 445) {
+		res = 1;
+	}
+	return res;
+}
+
 void keyboardCB(unsigned char key, int x, int y){
 	switch (key){
 	case 'A':
-		x = randomFloat(-10, 10);
-		y = randomFloat(-3.5, 3.5);
-		z = randomFloat(-15.0, -10.0);
-		r = randomFloat(0, 1);
-		g = randomFloat(0, 1);
-		b = randomFloat(0, 1);
-		addCube(1, x, y, z, r, g, b, cubeTransparency);
+		if (onMouse == 1 && dentroCubo(x, y)) {
+			x = randomFloat(-10, 10);
+			y = randomFloat(-3.5, 3.5);
+			z = randomFloat(-15.0, -10.0);
+			r = randomFloat(0, 1);
+			g = randomFloat(0, 1);
+			b = randomFloat(0, 1);
+			addCube(1, x, y, z, r, g, b, cubeTransparency);
+		}
+		
 		break;
 	case 'S':
-		x = randomFloat(-7.5, 7.5);
-		y = randomFloat(-2.5, 2.5);
-		z = randomFloat(-20.0, -7.0);
-		r = randomFloat(0, 1);
-		g = randomFloat(0, 1);
-		b = randomFloat(0, 1);
-		addSphere(0.5, 50, 50, x, y, z, r, g, b, sphereTransparency);
+		if (onMouse == 1 && dentroCirculo(x, y)) {
+			x = randomFloat(-7.5, 7.5);
+			y = randomFloat(-2.5, 2.5);
+			z = randomFloat(-20.0, -7.0);
+			r = randomFloat(0, 1);
+			g = randomFloat(0, 1);
+			b = randomFloat(0, 1);
+			addSphere(0.5, 50, 50, x, y, z, r, g, b, sphereTransparency);
+		}
 		break;
 	case 'D':
-		x = randomFloat(-5.0, 5.0);
-		y = randomFloat(-3.0, 1.0);
-		z = randomFloat(-20.0, -7.0);
-		r = randomFloat(0, 1);
-		g = randomFloat(0, 1);
-		b = randomFloat(0, 1);
-		addEllipse(0.75, 20, 10, x, y, z, r, g, b, ellipseTransparency);
+		if (onMouse == 1 && dentroElipsoide(x, y)) {
+			x = randomFloat(-5.0, 5.0);
+			y = randomFloat(-3.0, 1.0);
+			z = randomFloat(-20.0, -7.0);
+			r = randomFloat(0, 1);
+			g = randomFloat(0, 1);
+			b = randomFloat(0, 1);
+			addEllipse(0.75, 20, 10, x, y, z, r, g, b, ellipseTransparency);
+		}
 		break;
 	case 'M':
 		cubeMove = !cubeMove;
@@ -385,6 +498,21 @@ void keyboardCB(unsigned char key, int x, int y){
 	glutPostRedisplay();
 }
 
+
+void mouseClicks(int button, int state, int x, int y){
+
+
+
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		onMouse = 1;
+		cout << "x:\t" << x << "y:\t" << y << endl;
+	}
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+		onMouse = 0;
+	}
+	
+}
+
 int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	srand(static_cast <unsigned> (time(0)));
@@ -400,6 +528,7 @@ int main(int argc, char **argv){
 	glutReshapeFunc(handleResize);
 	glutTimerFunc(25, update, 0);
 	glutKeyboardFunc(keyboardCB);
+	glutMouseFunc(mouseClicks);
 	glutMainLoop();
 	return 0;
 }
