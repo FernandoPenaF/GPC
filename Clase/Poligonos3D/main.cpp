@@ -102,6 +102,21 @@ void polygons() {
 	glPopMatrix();
 }
 
+
+//Fuentes: http://www.codersource.net/2011/01/27/displaying-text-opengl-tutorial-5/ https://www.opengl.org/resources/libraries/glut/spec3/node76.html
+void drawBitmapText(char *string, float x, float y, float z)
+{
+	char *c;
+	glRasterPos3f(x, y, z);
+
+	for (c = string; *c != ' '; c++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+	}
+}
+
+
+
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Reset transformations
@@ -216,7 +231,35 @@ void draw() {
 	//viewport en el que se van a mostrar los elementos del menu
 	glViewport(10, 10, 1580, 200);
 	glLoadIdentity();
+	gluLookAt(0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+	//para escribir el texto
+	glPushMatrix();
+
+	glColor3f(0, 0, 0);
 	
+	drawBitmapText("Escalar     ", -0.5, 0.0, 0.0);
+	drawBitmapText("Mover     ", 0.0, 0.0, 0.0);
+	drawBitmapText("Transparente     ", 0.5, 0.0, 0.0);
+	drawBitmapText("Cambiar de Color     ", -0.5, -0.25, 0.0);
+	drawBitmapText("Rotar     ", 0.0, -0.25, 0.0);
+	drawBitmapText("Salir     ", 0.505, -0.25, 0.0);
+	//drawBitmapText("     ", 0.0, 0.0, 0.0);
+	
+	
+	//glColor3f(0.968, 0.498, 0.231);
+
+	drawBitmapText("E     ", -0.6, 0.0, 0.0);
+	drawBitmapText("M     ", -0.1, 0.0, 0.0);
+	drawBitmapText("T     ", 0.4, 0.0, 0.0);
+	drawBitmapText("C     ", -0.6, -0.25, 0.0);
+	drawBitmapText("R     ", -0.10, -0.25, 0.0);
+	drawBitmapText("Esc     ", 0.4, -0.25, 0.0);
+	//drawBitmapText("     ", 0.0, 0.0, 0.0);
+
+
+	glPopMatrix();
+
 	glFlush();
 	glutSwapBuffers();
 }
