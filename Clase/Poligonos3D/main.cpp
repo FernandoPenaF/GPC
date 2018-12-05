@@ -94,40 +94,24 @@ void addEllipse(double rad, int sl, int stk, float x, float y, float z, float r,
 	ellipses.push_back(generateEllipse(rad, sl, stk, x, y, z, r, g, b, t));
 }
 
-
-void polygons() {
-	glPushMatrix();
-	glRotatef(0.5, 1, 1, 0);
-	
-	glPopMatrix();
-}
-
-
 //Fuentes: http://www.codersource.net/2011/01/27/displaying-text-opengl-tutorial-5/ https://www.opengl.org/resources/libraries/glut/spec3/node76.html
-void drawBitmapText(char *string, float x, float y, float z)
-{
+void drawBitmapText(char *string, float x, float y, float z){
 	char *c;
 	glRasterPos3f(x, y, z);
 
-	for (c = string; *c != ' '; c++)
-	{
+	for (c = string; *c != ' '; c++){
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
 	}
 }
 
-
-
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// Reset transformations
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	// Add an ambient light
 	GLfloat ambientColor[] = { 0.2, 0.2, 0.2, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-
-	// Add a positioned light
 	GLfloat lightColor0[] = { 1.0,1.0, 1.0, 1.0 };
 	GLfloat lightPos0[] = { 0.0, 0.0, 1.0, 1.0 };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
@@ -190,9 +174,7 @@ void draw() {
 	//------------------------------------------------------------------------------------------------------------------
 	//viewport donde se van a poner las figuras que van a funcionar como boton
 	glViewport(10,220, 350, 675);
-	//gluLookAt(0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	glLoadIdentity();
-	
 	glOrtho(-5, 5, -10, 10, 5, -5);
 	gluLookAt(0.0, 0.0, 6.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	
@@ -246,9 +228,7 @@ void draw() {
 	drawBitmapText("Salir     ", 0.505, -0.25, 0.0);
 	//drawBitmapText("     ", 0.0, 0.0, 0.0);
 	
-	
 	//glColor3f(0.968, 0.498, 0.231);
-
 	drawBitmapText("E     ", -0.6, 0.0, 0.0);
 	drawBitmapText("M     ", -0.1, 0.0, 0.0);
 	drawBitmapText("T     ", 0.4, 0.0, 0.0);
@@ -264,7 +244,6 @@ void draw() {
 	glutSwapBuffers();
 }
 
-// Initializes 3D rendering
 void initRendering() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
@@ -288,9 +267,6 @@ void initRendering() {
 	scaleEllipse[2] = 1.0;
 }
 
-// Function for increasing the angle variable smoothly, 
-// keeps it <=360
-// It can also be implemented using the modulo operator.
 void update(int value) {
 	cubeAngle += 1.0f;
 	ellipseAngle += 1.0f;
@@ -372,7 +348,6 @@ void update(int value) {
 	glutTimerFunc(25, update, 0);
 }
 
-// Called when the window is resized
 void handleResize(int w, int h){
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
@@ -560,7 +535,6 @@ void mouseClicks(int button, int state, int x, int y){
 			b = randomFloat(0, 1);
 			addEllipse(0.75, 20, 10, xInit, yInit, z, r, g, b, ellipseTransparency);
 		}
-		//cout << "x:\t" << x << " y:\t" << y << endl;
 	}
 
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
