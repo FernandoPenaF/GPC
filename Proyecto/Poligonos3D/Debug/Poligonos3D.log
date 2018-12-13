@@ -1,0 +1,41 @@
+﻿  main.cpp
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(113): warning C4838: la conversión de 'double' en 'GLfloat' requiere una conversión de restricción
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(113): warning C4305: 'inicializando': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(123): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(138): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(150): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(167): warning C4244: 'argumento': conversión de 'int' a 'GLfloat'; posible pérdida de datos
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(169): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(194): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(204): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(228): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(232): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(233): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(234): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(235): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(236): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(237): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(288): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(306): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(326): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(409): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(417): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(425): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(473): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(483): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(493): warning C4018: '<': no coinciden signed/unsigned
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(442): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(451): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(460): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(470): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(480): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
+c:\users\lpenaf\desktop\gpc\proyecto\poligonos3d\main.cpp(490): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1270): note: vea la declaración de 'scanf'
+  LINK : no se encontró C:\Users\LPENAF\Desktop\GPC\Proyecto\Poligonos3D\Debug\Poligonos3D.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Proyecto\Poligonos3D\Debug\Poligonos3D.exe
+  Poligonos3D.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Proyecto\Poligonos3D\Debug\Poligonos3D.pdb (Full PDB)
