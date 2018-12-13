@@ -1,0 +1,7 @@
+﻿  Main.cpp
+c:\users\lpenaf\desktop\gpc\clase\poligonos\main.cpp(22): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\clase\poligonos\main.cpp(27): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\clase\poligonos\main.cpp(35): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\lpenaf\desktop\gpc\clase\poligonos\main.cpp(36): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+  Poligonos.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos\Debug\Poligonos.exe
+  Poligonos.vcxproj -> C:\Users\LPENAF\Desktop\GPC\Clase\Poligonos\Debug\Poligonos.pdb (Full PDB)
